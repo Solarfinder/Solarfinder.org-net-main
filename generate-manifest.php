@@ -3,7 +3,7 @@
  * Web-Based Manifest Generator for GoDaddy
  * 
  * Usage:
- *   http://yourdomain.com/generate-manifest.php?folder=pub_ab&save=1&key=YOUR_API_KEY
+ *   http://yourdomain.com/generate-manifest.php?folder=pub_ab&save=1&key=Y8955b7b6de5f77817ca7d7746338ef8fc5cb5c1fe1a95fbc2e7c17d88e3081fc
  * 
  * Parameters:
  *   - folder: The folder path to scan (relative to public_html)
@@ -117,13 +117,22 @@ function traverseDirectory($path, $relativePath = '') {
             } else if (is_file($fullPath)) {
                 // File
                 $fileSize = filesize($fullPath);
+                $mimeType = getMimeType($fullPath);
                 $item = [
                     'name' => $entry,
                     'type' => 'file',
                     'path' => $itemRelativePath,
                     'size' => $fileSize,
-                    'mimeType' => getMimeType($fullPath)
+                    'mimeType' => $mimeType
                 ];
+                
+                // Extract audio metadata if it's an audio file
+                if (strpos($mimeType, 'audio/') === 0) {
+                    $audioMetadata = getAudioMetadata($fullPath);
+                    if ($audioMetadata) {
+                        $item['audio'] = $audioMetadata;
+                    }
+                }
             } else {
                 continue;
             }
@@ -157,6 +166,88 @@ function getMimeType($filePath) {
     ];
     
     return $mimeTypes[$ext] ?? 'application/octet-stream';
+}
+
+/**
+ * Extract audio metadata using ffprobe
+ * Returns array with duration, bitrate, sample rate, channels, codec, or null if ffprobe unavailable
+ */
+function getAudioMetadata($filePath) {
+    // Check if ffprobe is available
+    $ffprobePath = shell_exec('which ffprobe 2>/dev/null') ?: 'ffprobe';
+    $testProbe = @shell_exec("$ffprobePath -version 2>&1");
+    
+    if (!$testProbe || strpos($testProbe, 'ffprobe') === false) {
+        // ffprobe not available
+        return null;
+    }
+    
+    try {
+        // Use ffprobe to extract audio information in JSON format
+        $command = sprintf(
+            '%s -v quiet -print_format json -show_format -show_streams %s',
+            escapeshellarg($ffprobePath),
+            escapeshellarg($filePath)
+        );
+        
+        $output = @shell_exec($command);
+        if (!$output) {
+            return null;
+        }
+        
+        $data = json_decode($output, true);
+        if (!$data) {
+            return null;
+        }
+        
+        $metadata = [];
+        
+        // Get duration from format
+        if (isset($data['format']['duration'])) {
+            $metadata['duration'] = (float)$data['format']['duration'];
+        }
+        
+        // Get bitrate from format (prefer stream bitrate)
+        if (isset($data['format']['bit_rate'])) {
+            $metadata['bitrate'] = (int)$data['format']['bit_rate'];
+        }
+        
+        // Extract stream information (audio)
+        if (isset($data['streams']) && is_array($data['streams'])) {
+            foreach ($data['streams'] as $stream) {
+                if ($stream['codec_type'] === 'audio') {
+                    // Sample rate
+                    if (isset($stream['sample_rate'])) {
+                        $metadata['sampleRate'] = (int)$stream['sample_rate'];
+                    }
+                    
+                    // Channels
+                    if (isset($stream['channels'])) {
+                        $metadata['channels'] = (int)$stream['channels'];
+                    } elseif (isset($stream['channel_layout'])) {
+                        $metadata['channelLayout'] = $stream['channel_layout'];
+                    }
+                    
+                    // Codec name
+                    if (isset($stream['codec_name'])) {
+                        $metadata['codec'] = $stream['codec_name'];
+                    }
+                    
+                    // Stream bitrate (more accurate)
+                    if (isset($stream['bit_rate']) && !isset($metadata['bitrate'])) {
+                        $metadata['bitrate'] = (int)$stream['bit_rate'];
+                    }
+                    
+                    // Only process first audio stream
+                    break;
+                }
+            }
+        }
+        
+        return !empty($metadata) ? $metadata : null;
+    } catch (Exception $e) {
+        return null;
+    }
 }
 
 // Generate manifest structure

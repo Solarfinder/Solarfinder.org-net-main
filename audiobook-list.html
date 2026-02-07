@@ -171,6 +171,7 @@
             color: #ffa500;
             cursor: pointer;
             transition: color 0.3s;
+            flex-shrink: 0;
         }
 
         .download-icon:hover {
@@ -178,22 +179,54 @@
         }
 
         .book-meta {
-            display: flex;
-            flex-direction: column;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             gap: 8px;
-            font-size: 13px;
+            font-size: 12px;
             color: #666;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
         }
 
         .meta-item {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
 
         .meta-item i {
-            width: 16px;
+            width: 14px;
             color: #ffa500;
+            font-size: 11px;
+        }
+
+        .meta-label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .audio-specs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+            font-size: 11px;
+            color: #888;
+            background: #f0f0f0;
+            padding: 8px;
+            border-radius: 5px;
+            margin-top: 8px;
+        }
+
+        .spec-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .spec-label {
+            font-weight: bold;
+            color: #666;
         }
 
         .loading {
@@ -406,9 +439,43 @@
                 const card = document.createElement('div');
                 card.className = 'book-card';
 
-                const duration = this.estimateDuration(book.size);
+                const duration = book.audio?.duration 
+                    ? this.formatDuration(book.audio.duration) 
+                    : this.estimateDuration(book.size);
+                
                 // Clean the path - remove leading slash and folder prefix if present
                 const cleanPath = this.cleanPath(book.path);
+                
+                // Extract narrator from folder path if nested
+                const narrator = this.extractNarrator(book.path);
+                
+                // Extract book number from filename
+                const bookInfo = this.extractBookNumber(book.name);
+
+                let audioSpecsHTML = '';
+                if (book.audio) {
+                    const bitrate = book.audio.bitrate ? (book.audio.bitrate / 1000).toFixed(0) + ' kbps' : 'N/A';
+                    const sampleRate = book.audio.sampleRate ? (book.audio.sampleRate / 1000).toFixed(1) + ' kHz' : 'N/A';
+                    const channels = book.audio.channels ? (book.audio.channels === 1 ? 'Mono' : book.audio.channels === 2 ? 'Stereo' : book.audio.channels + ' ch') : 'N/A';
+                    const codec = book.audio.codec ? book.audio.codec.toUpperCase() : 'N/A';
+                    
+                    audioSpecsHTML = `
+                        <div class="audio-specs">
+                            <div class="spec-item">
+                                <span class="spec-label">Codec:</span> ${codec}
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Bitrate:</span> ${bitrate}
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Sample:</span> ${sampleRate}
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Channels:</span> ${channels}
+                            </div>
+                        </div>
+                    `;
+                }
 
                 card.innerHTML = `
                     <div class="book-title">
@@ -418,18 +485,48 @@
                         <i class="fas fa-download download-icon" onclick="event.stopPropagation(); location.href='${this.basePath}${cleanPath}'"></i>
                     </div>
                     <div class="book-meta">
+                        ${narrator ? `<div class="meta-item"><i class="fas fa-user-circle"></i> <span class="meta-label">Narrator:</span> ${narrator}</div>` : ''}
+                        ${bookInfo.number ? `<div class="meta-item"><i class="fas fa-book"></i> <span class="meta-label">Book:</span> ${bookInfo.number}</div>` : ''}
                         <div class="meta-item">
                             <i class="fas fa-clock"></i>
-                            <span>${duration}</span>
+                            <span class="meta-label">Duration:</span> <span>${duration}</span>
                         </div>
                         <div class="meta-item">
                             <i class="fas fa-database"></i>
-                            <span>${this.formatFileSize(book.size)}</span>
+                            <span class="meta-label">Size:</span> <span>${this.formatFileSize(book.size)}</span>
                         </div>
                     </div>
+                    ${audioSpecsHTML}
                 `;
 
                 return card;
+            }
+
+            extractNarrator(path) {
+                // For Harry Potter: /pub_ab/Harry_Potter/Jim Dale/... => Jim Dale
+                const parts = path.split('/');
+                if (parts.length >= 4) {
+                    // Check if it's a nested folder structure (has narrator folder)
+                    const potential = parts[parts.length - 2];
+                    if (potential && potential !== 'pub_ab' && potential.includes('Dale') || potential.includes('Fry')) {
+                        return potential.replace(/_/g, ' ');
+                    }
+                }
+                return null;
+            }
+
+            extractBookNumber(filename) {
+                // Extracts book numbers/info from filenames
+                // Examples: "Book1", "Book2-", "Book3.5", "Mavericks_Book1"
+                const match = filename.match(/[Bb]ook\s*(\d+(?:\.\d+)?)/);
+                if (match) {
+                    return { number: 'Book ' + match[1] };
+                }
+                const maverickMatch = filename.match(/[Mm]avericks_[Bb]ook(\d+)/);
+                if (maverickMatch) {
+                    return { number: 'Mavericks Book ' + maverickMatch[1] };
+                }
+                return { number: null };
             }
 
             cleanPath(path) {
@@ -461,6 +558,19 @@
                     return `${mins}m`;
                 }
                 return `${hours}h ${mins}m`;
+            }
+
+            formatDuration(seconds) {
+                // Convert seconds to human-readable format
+                const totalSeconds = Math.round(seconds);
+                const hours = Math.floor(totalSeconds / 3600);
+                const minutes = Math.floor((totalSeconds % 3600) / 60);
+                const secs = totalSeconds % 60;
+
+                if (hours === 0) {
+                    return `${minutes}m ${secs}s`;
+                }
+                return `${hours}h ${minutes}m`;
             }
 
             formatFileSize(bytes) {
