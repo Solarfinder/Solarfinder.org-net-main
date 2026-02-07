@@ -81,12 +81,6 @@ class ManifestGenerator {
     }
   }
 
-class ManifestGenerator {
-  constructor(basePath = './pub_ab') {
-    this.basePath = basePath;
-    this.baseUrl = `/pub_ab`; // Relative URL for web access
-  }
-
   /**
    * Get file size in bytes
    */
@@ -159,9 +153,9 @@ class ManifestGenerator {
         } else if (entry.isFile()) {
           // Process file
           const filePath = `${this.baseUrl}/${webPath}`;
-          const fullPath = path.join(dirPath, entry.name);
-          const fileSize = this.getFileSize(fullPath);
-          const fileType = this.getMimeType(fullPath);
+          const fullPathFile = path.join(dirPath, entry.name);
+          const fileSize = this.getFileSize(fullPathFile);
+          const fileType = this.getMimeType(fullPathFile);
 
           const fileObj = {
             name: entry.name,
@@ -172,7 +166,7 @@ class ManifestGenerator {
 
           // Extract audio metadata if enabled and it's an audio file
           if (this.useFfprobe && fileType.startsWith('audio/')) {
-            const audioMeta = this.getAudioMetadata(fullPath);
+            const audioMeta = this.getAudioMetadata(fullPathFile);
             if (audioMeta) {
               fileObj.audio = audioMeta;
             }
