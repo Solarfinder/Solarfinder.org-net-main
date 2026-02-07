@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>KC Christensen – Portfolio</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/fontawesome-free-6.7.2-web/css/all.min.css" />
+</head>
+<body>
+  <div class="container">
+    <!-- Mobile Navigation Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay" aria-hidden="true"></div>
+    
+    <nav class="sidebar" id="sidebar" role="navigation" aria-label="Main navigation">
+      <!-- Logo Frame -->
+      <div class="logo-frame">
+        <img src="assets/i/moon-1280px.png" alt="Company Logo" />
+      </div>
+      
+      <div class="sidebar-toggle">
+        <button class="toggle-btn" aria-label="Toggle sidebar" aria-expanded="false">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+      <ul role="list">
+        <li><a href="#welcome"><i class="fas fa-home"></i> <span class="nav-text">Welcome</span></a></li>
+        <li><a href="#about"><i class="fas fa-user"></i> <span class="nav-text">About Me</span></a></li>
+        <li><a href="#journey"><i class="fas fa-road"></i> <span class="nav-text">Journey</span></a></li>
+        <li><a href="#experience"><i class="fas fa-briefcase"></i> <span class="nav-text">Experience</span></a></li>
+        <li><a href="#skills"><i class="fas fa-cogs"></i> <span class="nav-text">Skills</span></a></li>
+        <li><a href="#contact"><i class="fas fa-envelope"></i> <span class="nav-text">Contact</span></a></li>
+        <li><a href="assets/kc-res-pdf.pdf" class="button"><i class="fas fa-download"></i> <span class="nav-text">My Resume</span></a></li>
+      </ul>
+    </nav>
+    <div class="main-area">
+      <header class="fixed-header" role="banner">
+        <!-- Mobile Navigation Toggle -->
+        <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Open navigation menu" aria-expanded="false">
+          <i class="fas fa-bars"></i>
+        </button>
+        
+        <div class="header-profile">
+          <div class="profile-icon">
+            <i class="fas fa-user-circle"></i>
+          </div>
+          <div class="profile-content">
+            <h1 class="ffont">KC Christensen</h1>
+            <div class="profile-roles">
+              <span class="role-item">Portfolio Management</span>
+              <span class="role-item">Strategist</span>
+              <span class="role-item">Architect</span>
+              <span class="role-item">Learning Advocate</span>
+            </div>
+          </div>
+        </div>
+      </header>
+      <main class="content scroll-container">
+
+      <section id="welcome" class="frame">
+        <div class="page-content">
+          <div class="hero-badge">
+            <i class="fas fa-rocket"></i>
+          </div>
+          <h2>Welcome</h2>
+          <p>I bring together experience, curiosity, and strategy to create scalable, secure, and impactful technology solutions.</p>
+          <div class="welcome-stats">
+            <div class="stat-item">
+              <span class="stat-number">25+</span>
+              <span class="stat-label">Years Experience</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">100+</span>
+              <span class="stat-label">Projects Delivered</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">6</span>
+              <span class="stat-label">Industries</span>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="about" class="frame">
+        <div class="page-content">
+          <h2>About Me</h2>
+          <p>I value curiosity, continuous learning, and helping others build strong technical foundations.</p>
+          <ul class="skills">
+            <li>Cloud</li><li>Security</li><li>DevOps</li><li>Architecture</li>
+            <li>AI/ML Enablement</li><li>Infrastructure</li><li>Education</li><li>Leadership</li>
+          </ul>
+        </div>
+      </section>
+      <section id="journey" class="frame">
+        <div class="page-content">
+          <h2>Professional Journey</h2>
+          <p>From hands-on engineering to architectural leadership, I've helped organizations evolve their technology and talent strategies across industries.</p>
+          <div class="journey-timeline">
+            <div class="timeline-item">
+              <div class="timeline-icon">
+                <i class="fas fa-lightbulb"></i>
+              </div>
+              <div class="timeline-content">
+                <h4>Innovation & Strategy</h4>
+                <p>Leading digital transformation initiatives</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-icon">
+                <i class="fas fa-building"></i>
+              </div>
+              <div class="timeline-content">
+                <h4>Enterprise Architecture</h4>
+                <p>Designing scalable technology foundations</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-icon">
+                <i class="fas fa-wrench"></i>
+              </div>
+              <div class="timeline-content">
+                <h4>Hands-on Engineering</h4>
+                <p>Building secure, reliable systems</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="experience" class="frame">
+        <div class="page-content">
+          <h2>Professional Experience</h2>
+          <div class="experience-layout">
+            <div class="experience-sidebar">
+              <div class="experience-nav-item active" data-target="experience-1">
+                <div class="experience-years">2021–Present</div>
+                <div class="experience-title">Skills Strategy Consultant</div>
+                <div class="experience-company">Pluralsight</div>
+              </div>
+              <div class="experience-nav-item" data-target="experience-2">
+                <div class="experience-years">2015–2021</div>
+                <div class="experience-title">Senior Cloud Engagement Architect</div>
+                <div class="experience-company">The Church of Jesus Christ of Latter-day Saints</div>
+              </div>
+              <div class="experience-nav-item" data-target="experience-3">
+                <div class="experience-years">2011–2015</div>
+                <div class="experience-title">Senior Dynamics Engineer</div>
+                <div class="experience-company">The Church of Jesus Christ of Latter-day Saints</div>
+              </div>
+              <div class="experience-nav-item" data-target="experience-4">
+                <div class="experience-years">2007–2011</div>
+                <div class="experience-title">Systems Engineer</div>
+                <div class="experience-company">Maggie Sottero Designs</div>
+              </div>
+              <div class="experience-nav-item" data-target="experience-5">
+                <div class="experience-years">1997–2015</div>
+                <div class="experience-title">Owner / Engagement Consultant</div>
+                <div class="experience-company">Solarfinder</div>
+              </div>
+              <div class="experience-nav-item" data-target="experience-6">
+                <div class="experience-years">1999–2004</div>
+                <div class="experience-title">Systems Engineer</div>
+                <div class="experience-company">Zions Bancorporation</div>
+              </div>
+            </div>
+            
+            <div class="experience-content">
+              <div id="experience-1" class="experience-detail active">
+                <div class="experience-header">
+                  <h3>Skills Strategy Consultant</h3>
+                  <div class="experience-meta">
+                    <span class="years">2021–Present</span>
+                    <span class="company">Pluralsight – Remote/New York</span>
+                  </div>
+                </div>
+                <div class="experience-description">
+                  <p>Supporting Fortune 1000 customers by aligning technical skill development with strategic business outcomes. Built personalized learning plans using Pluralsight's content ecosystem to address onboarding, cross-skilling, and role mastery across diverse departments and industries. Delivered actionable insight to customer executives through learner analytics and adoption metrics.</p>
+                  <ul class="role-details">
+                    <li>Partner with enterprise clients to design and implement skill development strategies using curated learning pathways</li>
+                    <li>Align employee training with business goals to drive productivity, retention, and technical growth</li>
+                    <li>Utilize data analytics to monitor learning outcomes and optimize content engagement</li>
+                  </ul>
+                </div>
+              </div>
+              
+              <div id="experience-2" class="experience-detail">
+                <div class="experience-header">
+                  <h3>Senior Cloud Engagement Architect</h3>
+                  <div class="experience-meta">
+                    <span class="years">2015–2021</span>
+                    <span class="company">The Church of Jesus Christ of Latter-day Saints – Salt Lake City, UT</span>
+                  </div>
+                </div>
+                <div class="experience-description">
+                  <p>Championed enterprise-wide modernization of on-prem systems by migrating workloads to cloud-first and hybrid architectures. Delivered scalable, compliant systems spanning global B2B and B2C environments with an emphasis on secure multi-tenant deployment. Led efforts across security, DevOps, and infrastructure teams.</p>
+                  <ul class="role-details">
+                    <li>Led global cloud adoption initiatives, transforming legacy systems into secure hybrid environments</li>
+                    <li>Architected and deployed performant, scalable platforms supporting B2B, B2C, and multi-tenant use cases</li>
+                    <li>Delivered enterprise solutions integrating identity management, DevSecOps, and compliance frameworks</li>
+                  </ul>
+                </div>
+              </div>
+              
+              <div id="experience-3" class="experience-detail">
+                <div class="experience-header">
+                  <h3>Senior Dynamics Engineer</h3>
+                  <div class="experience-meta">
+                    <span class="years">2011–2015</span>
+                    <span class="company">The Church of Jesus Christ of Latter-day Saints – Salt Lake City, UT</span>
+                  </div>
+                </div>
+                <div class="experience-description">
+                  <p>Designed and maintained a global Microsoft Dynamics CRM platform serving thousands of users. Implemented vendor integration via extensible APIs, with real-time data synchronization to support mission-critical workflows. Facilitated global reach by deploying scalable, multi-tenant XRM environments.</p>
+                  <ul class="role-details">
+                    <li>Developed multi-tenant Microsoft Dynamics CRM/ERP systems for global deployment</li>
+                    <li>Enabled real-time integration through extensible, API-first architectures</li>
+                    <li>Collaborated across departments to ensure platform stability, compliance, and interoperability</li>
+                  </ul>
+                </div>
+              </div>
+              
+              <div id="experience-4" class="experience-detail">
+                <div class="experience-header">
+                  <h3>Systems Engineer</h3>
+                  <div class="experience-meta">
+                    <span class="years">2007–2011</span>
+                    <span class="company">Maggie Sottero Designs – Salt Lake City, UT</span>
+                  </div>
+                </div>
+                <div class="experience-description">
+                  <p>Led cloud enablement strategy for a growing fashion retail brand. Migrated legacy infrastructure and business systems to a secure, scalable hybrid environment. Improved operational agility by deploying modern collaboration platforms and automation solutions.</p>
+                  <ul class="role-details">
+                    <li>Modernized infrastructure through cloud migration and hybrid solutions</li>
+                    <li>Improved business continuity and productivity through secure, collaborative platforms</li>
+                  </ul>
+                </div>
+              </div>
+              
+              <div id="experience-5" class="experience-detail">
+                <div class="experience-header">
+                  <h3>Owner / Engagement Consultant</h3>
+                  <div class="experience-meta">
+                    <span class="years">1997–2015</span>
+                    <span class="company">Solarfinder – Salt Lake City, UT</span>
+                  </div>
+                </div>
+                <div class="experience-description">
+                  <p>Delivered technical consulting services for clients including 3M Health, ADP, and HP Services across CRM, ERP, HRIS, and hybrid infrastructure initiatives. Spearheaded solutions integrating business intelligence, collaborative tools, and federated identity platforms to accelerate client digital transformation goals.</p>
+                  <ul class="role-details">
+                    <li>Delivered strategic consulting to clients including 3M, ADP, and HP across cloud, ERP, and HRIS domains</li>
+                    <li>Engineered integrated systems to support cross-functional workflows and digital transformation</li>
+                  </ul>
+                </div>
+              </div>
+              
+              <div id="experience-6" class="experience-detail">
+                <div class="experience-header">
+                  <h3>Systems Engineer</h3>
+                  <div class="experience-meta">
+                    <span class="years">1999–2004</span>
+                    <span class="company">Zions Bancorporation – Salt Lake City, UT</span>
+                  </div>
+                </div>
+                <div class="experience-description">
+                  <p>Engineered and supported enterprise-wide virtualization and secure access technologies for banking operations. Built and maintained resilient storage and messaging infrastructure across branch and remote locations to support teller and customer communications.</p>
+                  <ul class="role-details">
+                    <li>Deployed and managed virtual desktop and remote access solutions for secure banking operations</li>
+                    <li>Engineered fault-tolerant storage and document delivery systems to support distributed environments</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+      <section id="skills" class="frame">
+        <div class="page-content">
+          <h2>Skills</h2>
+          <div class="skills-layout">
+            <div class="skills-sidebar">
+              <div class="skills-nav-item active" data-target="skill-1">
+                <div class="skills-category">Cloud Platforms</div>
+                <div class="skills-description">Multi-Cloud Architecture & Services</div>
+              </div>
+              <div class="skills-nav-item" data-target="skill-2">
+                <div class="skills-category">DevOps & Containerization</div>
+                <div class="skills-description">Infrastructure Automation & Orchestration</div>
+              </div>
+              <div class="skills-nav-item" data-target="skill-3">
+                <div class="skills-category">Networking</div>
+                <div class="skills-description">Network Security & Performance</div>
+              </div>
+              <div class="skills-nav-item" data-target="skill-4">
+                <div class="skills-category">Security & Compliance</div>
+                <div class="skills-description">Risk Management & Regulatory Frameworks</div>
+              </div>
+              <div class="skills-nav-item" data-target="skill-5">
+                <div class="skills-category">Identity & Access Management</div>
+                <div class="skills-description">Authentication & Authorization</div>
+              </div>
+              <div class="skills-nav-item" data-target="skill-6">
+                <div class="skills-category">Enterprise Applications</div>
+                <div class="skills-description">Business Platform Integration</div>
+              </div>
+              <div class="skills-nav-item" data-target="skill-7">
+                <div class="skills-category">Analytics & Automation</div>
+                <div class="skills-description">Data Insights & Process Optimization</div>
+              </div>
+              <div class="skills-nav-item" data-target="skill-8">
+                <div class="skills-category">Collaboration & Productivity</div>
+                <div class="skills-description">Team Communication & Workflow Tools</div>
+              </div>
+              <div class="skills-nav-item" data-target="skill-9">
+                <div class="skills-category">ITSM & Monitoring</div>
+                <div class="skills-description">Service Management & Performance Tracking</div>
+              </div>
+              <div class="skills-nav-item" data-target="skill-10">
+                <div class="skills-category">API Integration</div>
+                <div class="skills-description">System Connectivity & Data Exchange</div>
+              </div>
+            </div>
+            
+            <div class="skills-content">
+              <div id="skill-1" class="skills-detail active">
+                <div class="skills-header">
+                  <h3>Cloud Platforms</h3>
+                  <div class="skills-meta">
+                    <span class="category-type">Multi-Cloud Architecture & Services</span>
+                  </div>
+                </div>
+                <div class="skills-description">
+                  <p>Comprehensive expertise across major cloud platforms, delivering scalable and resilient solutions in multi-cloud and hybrid environments.</p>
+                  <ul class="skill-details">
+                    <li><i class="fab fa-aws"></i><span>AWS</span></li>
+                    <li><i class="fab fa-microsoft"></i><span>Azure</span></li>
+                    <li><i class="fas fa-cloud"></i><span>Oracle Cloud</span></li>
+                    <li><i class="fab fa-google"></i><span>Google Cloud</span></li>
+                    <li><i class="fas fa-cloud-upload-alt"></i><span>Cloud Foundry</span></li>
+                  </ul>
+                </div>
+              </div>
+              
+              <div id="skill-2" class="skills-detail">
+                <div class="skills-header">
+                  <h3>DevOps & Containerization</h3>
+                  <div class="skills-meta">
+                    <span class="category-type">Infrastructure Automation & Orchestration</span>
+                  </div>
+                </div>
+                <div class="skills-description">
+                  <p>Advanced containerization and infrastructure automation expertise enabling continuous delivery and scalable deployment strategies.</p>
+                  <ul class="skill-details">
+                    <li><i class="fas fa-dharmachakra"></i><span>Kubernetes</span></li>
+                    <li><i class="fab fa-docker"></i><span>Docker</span></li>
+                    <li><i class="fas fa-layer-group"></i><span>Terraform</span></li>
+                    <li><i class="fab fa-aws"></i><span>Lambda</span></li>
+                    <li><i class="fab fa-microsoft"></i><span>Azure Function Apps</span></li>
+                  </ul>
+                </div>
+              </div>
+              
+              <div id="skill-3" class="skills-detail">
+                <div class="skills-header">
+                  <h3>Networking</h3>
+                  <div class="skills-meta">
+                    <span class="category-type">Network Security & Performance</span>
+                  </div>
+                </div>
+                <div class="skills-description">
+                  <p>Enterprise networking solutions focused on security, performance optimization, and global content delivery across hybrid infrastructures.</p>
+                  <ul class="skill-details">
+                    <li><i class="fas fa-network-wired"></i><span>SD-WAN</span></li>
+                    <li><i class="fas fa-shield-alt"></i><span>WAF</span></li>
+                    <li><i class="fas fa-shield-virus"></i><span>WAAP</span></li>
+                    <li><i class="fas fa-globe"></i><span>Akamai</span></li>
+                    <li><i class="fab fa-microsoft"></i><span>ExpressRoute</span></li>
+                    <li><i class="fab fa-aws"></i><span>Direct Connect</span></li>
+                    <li><i class="fas fa-route"></i><span>Edge Delivery</span></li>
+                  </ul>
+                </div>
+              </div>
+              
+              <div id="skill-4" class="skills-detail">
+                <div class="skills-header">
+                  <h3>Security & Compliance</h3>
+                  <div class="skills-meta">
+                    <span class="category-type">Risk Management & Regulatory Frameworks</span>
+                  </div>
+                </div>
+                <div class="skills-description">
+                  <p>Comprehensive security monitoring and compliance expertise ensuring regulatory adherence and threat detection across enterprise environments.</p>
+                  <ul class="skill-details">
+                    <li><i class="fas fa-search"></i> Splunk</li>
+                    <li><i class="fab fa-microsoft"></i> Azure Sentinel</li>
+                    <li><i class="fab fa-microsoft"></i> M365 Compliance</li>
+                    <li><i class="fas fa-gavel"></i> GDPR</li>
+                    <li><i class="fas fa-credit-card"></i> PCI</li>
+                    <li><i class="fas fa-graduation-cap"></i> FERPA</li>
+                    <li><i class="fas fa-university"></i> OCC</li>
+                  </ul>
+                </div>
+              </div>
+              
+              <div id="skill-5" class="skills-detail">
+                <div class="skills-header">
+                  <h3>Identity & Access Management</h3>
+                  <div class="skills-meta">
+                    <span class="category-type">Authentication & Authorization</span>
+                  </div>
+                </div>
+                <div class="skills-description">
+                  <p>Modern identity solutions implementing zero-trust architectures with advanced authentication protocols and access control frameworks.</p>
+                  <ul class="skill-details">
+                    <li><i class="fab fa-microsoft"></i> Azure AD</li>
+                    <li><i class="fas fa-id-card"></i> Okta</li>
+                    <li><i class="fas fa-key"></i> OAuth</li>
+                    <li><i class="fab fa-microsoft"></i> ADFS</li>
+                    <li><i class="fas fa-fingerprint"></i> FIDO2</li>
+                    <li><i class="fas fa-user-shield"></i> RBAC</li>
+                    <li><i class="fas fa-mobile-alt"></i> MFA</li>
+                  </ul>
+                </div>
+              </div>
+              
+              <div id="skill-6" class="skills-detail">
+                <div class="skills-header">
+                  <h3>Enterprise Applications</h3>
+                  <div class="skills-meta">
+                    <span class="category-type">Business Platform Integration</span>
+                  </div>
+                </div>
+                <div class="skills-description">
+                  <p>Enterprise application architecture and integration across major business platforms, enabling seamless workflow automation and data synchronization.</p>
+                  <ul class="skill-details">
+                    <li><i class="fab fa-microsoft"></i> Dynamics 365</li>
+                    <li><i class="fab fa-salesforce"></i> Salesforce</li>
+                    <li><i class="fas fa-building"></i> SAP</li>
+                    <li><i class="fab fa-microsoft"></i> Microsoft 365</li>
+                  </ul>
+                </div>
+              </div>
+              
+              <div id="skill-7" class="skills-detail">
+                <div class="skills-header">
+                  <h3>Analytics & Automation</h3>
+                  <div class="skills-meta">
+                    <span class="category-type">Data Insights & Process Optimization</span>
+                  </div>
+                </div>
+                <div class="skills-description">
+                  <p>Business intelligence and process automation solutions delivering actionable insights and streamlined workflows through low-code/no-code platforms.</p>
+                  <ul class="skill-details">
+                    <li><i class="fab fa-microsoft"></i> Power BI</li>
+                    <li><i class="fas fa-chart-bar"></i> Tableau</li>
+                    <li><i class="fas fa-bolt"></i> Zapier</li>
+                    <li><i class="fab fa-microsoft"></i> Power Platform</li>
+                    <li><i class="fas fa-magic"></i> NoCode/LowCode</li>
+                  </ul>
+                </div>
+              </div>
+              
+              <div id="skill-8" class="skills-detail">
+                <div class="skills-header">
+                  <h3>Collaboration & Productivity</h3>
+                  <div class="skills-meta">
+                    <span class="category-type">Team Communication & Workflow Tools</span>
+                  </div>
+                </div>
+                <div class="skills-description">
+                  <p>Modern collaboration platforms and productivity tools enabling distributed teams and integrated development workflows.</p>
+                  <ul class="skill-details">
+                    <li><i class="fab fa-microsoft"></i> MS Teams</li>
+                    <li><i class="fab fa-slack"></i> Slack</li>
+                    <li><i class="fas fa-video"></i> Zoom</li>
+                    <li><i class="fab fa-google"></i> Google Workspace</li>
+                    <li><i class="fas fa-tools"></i> DevOps Tools</li>
+                  </ul>
+                </div>
+              </div>
+              
+              <div id="skill-9" class="skills-detail">
+                <div class="skills-header">
+                  <h3>ITSM & Monitoring</h3>
+                  <div class="skills-meta">
+                    <span class="category-type">Service Management & Performance Tracking</span>
+                  </div>
+                </div>
+                <div class="skills-description">
+                  <p>IT service management and application performance monitoring solutions ensuring optimal system reliability and user experience.</p>
+                  <ul class="skill-details">
+                    <li><i class="fas fa-cogs"></i> ServiceNow</li>
+                    <li><i class="fas fa-ticket-alt"></i> Zendesk</li>
+                    <li><i class="fab fa-salesforce"></i> Salesforce Service Cloud</li>
+                    <li><i class="fas fa-chart-line"></i> Dynatrace</li>
+                    <li><i class="fas fa-sync-alt"></i> CI/CD Workflows</li>
+                  </ul>
+                </div>
+              </div>
+              
+              <div id="skill-10" class="skills-detail">
+                <div class="skills-header">
+                  <h3>API Integration</h3>
+                  <div class="skills-meta">
+                    <span class="category-type">System Connectivity & Data Exchange</span>
+                  </div>
+                </div>
+                <div class="skills-description">
+                  <p>API-first architecture and integration platforms enabling seamless data exchange and system interoperability across enterprise ecosystems.</p>
+                  <ul class="skill-details">
+                    <li><i class="fab fa-google"></i> APIGEE</li>
+                    <li><i class="fas fa-exchange-alt"></i> MuleSoft</li>
+                    <li><i class="fas fa-cloud"></i> Azure/AWS API Gateway</li>
+                    <li><i class="fas fa-plug"></i> API-first delivery models</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+      </section>
+      <section id="contact" class="frame">
+        <div class="page-content">
+          <div class="contact-icon">
+            <i class="fas fa-comments"></i>
+          </div>
+          <h2>Contact</h2>
+          <p>Let's connect. Reach out at <a href="mailto:kc@solarfinder.org">kc@solarfinder.org</a></p>
+          <div class="contact-methods">
+            <div class="contact-item">
+              <i class="fab fa-linkedin"></i>
+              <span>Professional Networking</span>
+            </div>
+            <div class="contact-item">
+              <i class="fab fa-github"></i>
+              <span>Code Collaboration</span>
+            </div>
+            <div class="contact-item">
+              <i class="fas fa-envelope"></i>
+              <span>Direct Communication</span>
+            </div>
+          </div>
+          
+          <!-- Option 3: Collapsible Resume Section -->
+          <div class="resume-collapsible">
+            <button class="resume-toggle" id="resumeToggle" aria-expanded="false">
+              <i class="fas fa-file-alt"></i>
+              <span>View Resume</span>
+              <i class="fas fa-chevron-down toggle-arrow"></i>
+            </button>
+            <div class="resume-content" id="resumeContent">
+              <div class="resume-viewer">
+                <embed src="assets/kc-res-pdf.pdf" type="application/pdf" width="100%" height="500px" />
+                <div class="resume-fallback">
+                  <p>If the PDF doesn't display, you can <a href="assets/kc-res-pdf.pdf" target="_blank">download it here</a>.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <footer>
+        <div class="footer-profile">
+          <div class="footer-icon">
+            <i class="fas fa-copyright"></i>
+          </div>
+          <div class="footer-content">
+            <p class="ffont">In Pursuit of Perfection 2001-2025</p>
+            <div class="footer-info">
+              <span class="info-item">2010-2025</span>
+              <span class="info-item">All Rights Reserved</span>
+              <span class="info-item">Portfolio Site</span>
+            </div>
+            <div class="footer-social">
+              <a href="https://linkedin.com/in/solarfinder" target="_blank"><i class="fab fa-linkedin"></i></a>
+              <a href="https://github.com/solarfinder" target="_blank"><i class="fab fa-github"></i></a>
+              <a href="mailto:solarfinder@gmail.com"><i class="fas fa-envelope"></i></a>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </main>
+    </div>
+  </div>
+  
+  <!-- PDF Modal (Option 2) -->
+  <div id="pdfModal" class="pdf-modal" aria-hidden="true">
+    <div class="pdf-modal-overlay" id="pdfModalOverlay"></div>
+    <div class="pdf-modal-content">
+      <div class="pdf-modal-header">
+        <h3>Resume - KC Christensen</h3>
+        <button class="pdf-modal-close" id="pdfModalClose" aria-label="Close resume viewer">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="pdf-modal-body">
+        <embed src="assets/kc-res-pdf.pdf" type="application/pdf" width="100%" height="100%" />
+        <div class="pdf-fallback">
+          <p>If the PDF doesn't display, you can <a href="assets/kc-res-pdf.pdf" target="_blank">download it here</a>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script src="assets/js/transitions.js"></script>
+</body>
+</html>

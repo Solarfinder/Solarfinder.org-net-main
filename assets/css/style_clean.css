@@ -1,0 +1,135 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: #f4f4f4;
+  color: #333;
+}
+.container {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+.sidebar {
+  width: 250px;
+  background: #003f5c;
+  color: #fff;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.sidebar h2 {
+  margin-top: 0;
+}
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+.sidebar ul li {
+  margin: 15px 0;
+}
+.sidebar ul li a {
+  color: #f0f0f0;
+  text-decoration: none;
+}
+.sidebar .button {
+  display: inline-block;
+  padding: 8px 12px;
+  margin-top: 10px;
+  background: #ffa500;
+  color: #000;
+  border-radius: 4px;
+  text-align: center;
+}
+.social a {
+  color: #ffa500;
+  margin-right: 10px;
+  font-size: 1.4rem;
+}
+.content {
+  flex: 1;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+.frame {
+  scroll-snap-align: start;
+  min-height: 100vh;
+  padding: 0;
+  box-sizing: border-box;
+  background: #fff;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.skills li {
+  background: #e0f7fa;
+  padding: 6px 12px;
+  border-radius: 4px;
+  list-style: none;
+}
+footer {
+  padding: 40px;
+  text-align: center;
+  background: #fff;
+}
+
+/* Section-specific styling */
+#hero { 
+  background-image: url('../i/IssMoon_Holland_960.jpg');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#about {
+  background-image: url('../i/moon-dark1280.jpg');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#journey {
+  background-image: url('../i/Moon-half_1280.jpg');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#experience {
+  background-image: url('../i/moon-1280px.jpg');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#contact {
+  background-image: url('../i/contact-bg.jpg');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.hero-content {
+  background-color: rgba(255, 255, 255, 0.75);
+  border-radius: 50px;
+  padding: 40px;
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  width: 75%;
+  height: 75%;
+  margin: 12.5%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
