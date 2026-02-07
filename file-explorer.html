@@ -591,6 +591,17 @@
         this.stats = { folders: 0, files: 0, totalSize: 0 };
         this.currentUrl = null;
         this.isUrlMode = false;
+        
+        // API Configuration
+        // Set this to your backend API server URL (e.g., http://localhost:3000)
+        // Leave empty to use direct file access (less secure)
+        this.apiUrl = window.location.hostname === 'localhost' 
+          ? 'http://localhost:3000' 
+          : ''; // Use the current domain
+        
+        // API Key for backend authentication
+        // Get this from your environment configuration
+        this.apiKey = localStorage.getItem('fileExplorerApiKey') || '';
 
         this.init();
       }
@@ -647,33 +658,73 @@
         this.loadBtn.innerHTML = '<span class="loading-spinner"></span>Loading...';
 
         try {
-          // Normalize the URL path
-          let manifestUrl = url;
-          if (!manifestUrl.startsWith('/') && !manifestUrl.startsWith('./')) {
-            manifestUrl = './' + manifestUrl;
-          }
-          if (!manifestUrl.endsWith('/')) {
-            manifestUrl += '/';
+          let manifest;
+
+          // If API is configured, use secure backend
+          if (this.apiUrl) {
+            manifest = await this.loadFromSecureApi(url);
+          } else {
+            // Fallback to direct file access (less secure - only for public files)
+            manifest = await this.loadFromDirectFile(url);
           }
 
-          // Try to fetch manifest.json
-          const response = await fetch(manifestUrl + 'manifest.json');
-          
-          if (!response.ok) {
-            throw new Error(`Could not load manifest.json from ${manifestUrl}`);
-          }
-
-          const manifest = await response.json();
           this.currentUrl = url;
           this.buildStructureFromManifest(manifest);
           this.render();
         } catch (error) {
           console.error('Error loading folder:', error);
-          alert(`Error loading folder: ${error.message}\n\nMake sure the folder contains a manifest.json file with the correct structure.`);
+          alert(`Error loading folder: ${error.message}\n\nMake sure:\n1. The folder path is correct\n2. manifest.json exists and is valid\n3. You have the required API key (if using backend)`);
         } finally {
           this.loadBtn.disabled = false;
           this.loadBtn.innerHTML = originalText;
         }
+      }
+
+      async loadFromSecureApi(folderPath) {
+        // Remove leading/trailing slashes
+        folderPath = folderPath.trim().replace(/^\/+|\/+$/g, '');
+
+        if (!this.apiKey) {
+          throw new Error('API key not configured. Please contact administrator.');
+        }
+
+        const url = `${this.apiUrl}/api/manifest?folder=${encodeURIComponent(folderPath)}`;
+        
+        const response = await fetch(url, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-API-Key': this.apiKey
+          }
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({}));
+          const message = errorData.message || `HTTP ${response.status}: ${response.statusText}`;
+          throw new Error(`API Error: ${message}`);
+        }
+
+        return await response.json();
+      }
+
+      async loadFromDirectFile(url) {
+        // Normalize the URL path
+        let manifestUrl = url;
+        if (!manifestUrl.startsWith('/') && !manifestUrl.startsWith('./')) {
+          manifestUrl = './' + manifestUrl;
+        }
+        if (!manifestUrl.endsWith('/')) {
+          manifestUrl += '/';
+        }
+
+        // Try to fetch manifest.json directly
+        const response = await fetch(manifestUrl + 'manifest.json');
+        
+        if (!response.ok) {
+          throw new Error(`Could not load manifest.json from ${manifestUrl} (HTTP ${response.status})`);
+        }
+
+        return await response.json();
       }
 
       buildStructureFromManifest(manifestData) {
@@ -847,20 +898,14 @@
         if (this.isUrlMode && this.currentUrl) {
           (async () => {
             try {
-              let manifestUrl = this.currentUrl;
-              if (!manifestUrl.startsWith('/') && !manifestUrl.startsWith('./')) {
-                manifestUrl = './' + manifestUrl;
-              }
-              if (!manifestUrl.endsWith('/')) {
-                manifestUrl += '/';
-              }
-
-              const response = await fetch(manifestUrl + 'manifest.json');
-              if (!response.ok) {
-                throw new Error(`Could not refresh manifest.json`);
+              let manifest;
+              
+              if (this.apiUrl) {
+                manifest = await this.loadFromSecureApi(this.currentUrl);
+              } else {
+                manifest = await this.loadFromDirectFile(this.currentUrl);
               }
 
-              const manifest = await response.json();
               this.buildStructureFromManifest(manifest);
               this.render();
               handleRefreshComplete();
