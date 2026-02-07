@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Directory Browser</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .directory-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .directory-header {
+            margin-bottom: 30px;
+            border-bottom: 2px solid #ffa500;
+            padding-bottom: 20px;
+        }
+
+        .directory-header h1 {
+            color: #333;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .directory-header .folder-info {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .directory-header .controls {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .folder-input-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .folder-input-group input {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .folder-input-group button {
+            padding: 10px 20px;
+            background: #ffa500;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .folder-input-group button:hover {
+            background: #ff8c00;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #ffa500;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error {
+            background: #fee;
+            border: 1px solid #fcc;
+            color: #c33;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+
+        .directory-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-box .number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ffa500;
+        }
+
+        .stat-box .label {
+            font-size: 12px;
+            margin-top: 5px;
+            opacity: 0.9;
+        }
+
+        .file-tree {
+            margin-top: 20px;
+        }
+
+        .tree-node {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .tree-node > li {
+            margin: 5px 0;
+        }
+
+        .tree-node .node-content {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .tree-node .node-content:hover {
+            background: rgba(255, 165, 0, 0.1);
+        }
+
+        .tree-node .node-icon {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+            color: #ffa500;
+        }
+
+        .tree-node .node-name {
+            flex: 1;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .tree-node .node-size {
+            font-size: 12px;
+            color: #999;
+            margin-right: 15px;
+            min-width: 80px;
+            text-align: right;
+        }
+
+        .tree-node .node-toggle {
+            width: 20px;
+            text-align: center;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .tree-node .node-toggle:hover {
+            color: #ffa500;
+        }
+
+        .tree-node .toggle-btn {
+            display: inline-block;
+            transition: transform 0.2s;
+        }
+
+        .tree-node .toggle-btn.collapsed {
+            transform: rotate(-90deg);
+        }
+
+        .tree-node .children {
+            margin-left: 30px;
+            display: none;
+        }
+
+        .tree-node .children.visible {
+            display: block;
+        }
+
+        .file-link {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .file-link:hover {
+            text-decoration: underline;
+        }
+
+        .download-btn {
+            background: #ffa500;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 3px;
+            text-decoration: none;
+            font-size: 12px;
+            cursor: pointer;
+            border: none;
+            transition: background 0.3s;
+            margin-left: 10px;
+        }
+
+        .download-btn:hover {
+            background: #ff8c00;
+        }
+
+        .empty-message {
+            padding: 40px;
+            text-align: center;
+            color: #999;
+        }
+
+        .breadcrumb {
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .breadcrumb a {
+            color: #667eea;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="directory-container">
+        <div class="directory-header">
+            <h1>
+                <i class="fas fa-folder-open"></i>
+                Directory Browser
+            </h1>
+            <div class="folder-info" id="folderInfo">Enter a folder to browse</div>
+            
+            <div class="controls">
+                <div class="folder-input-group">
+                    <input 
+                        type="text" 
+                        id="folderInput" 
+                        placeholder="Enter folder name (e.g., pub_ab)" 
+                        value="pub_ab"
+                    >
+                    <button onclick="loadDirectory()">Browse</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="breadcrumb" id="breadcrumb" style="display: none;"></div>
+
+        <div id="statisticsContainer" style="display: none;">
+            <div class="directory-stats" id="statistics"></div>
+        </div>
+
+        <div id="loadingContainer" style="display: none;" class="loading">
+            <div class="spinner"></div>
+            <span>Loading directory structure...</span>
+        </div>
+
+        <div id="errorContainer" style="display: none;"></div>
+
+        <div id="treeContainer" style="display: none;" class="file-tree">
+            <ul class="tree-node" id="fileTree"></ul>
+        </div>
+
+        <div id="emptyContainer" style="display: none;" class="empty-message">
+            <p>No files or folders found, or directory doesn't exist.</p>
+        </div>
+    </div>
+
+    <script>
+        class DirectoryBrowser {
+            constructor() {
+                this.currentFolder = null;
+                this.manifest = null;
+                this.basePath = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1);
+            }
+
+            async loadDirectory() {
+                const folderInput = document.getElementById('folderInput');
+                const folder = folderInput.value.trim();
+
+                if (!folder) {
+                    alert('Please enter a folder name');
+                    return;
+                }
+
+                this.showLoading(true);
+                this.hideError();
+
+                try {
+                    const manifestUrl = `${this.basePath}${folder}/manifest.json`;
+                    const response = await fetch(manifestUrl);
+                    
+                    if (!response.ok) {
+                        throw new Error(`Failed to load manifest.json (${response.status})`);
+                    }
+
+                    this.manifest = await response.json();
+                    this.currentFolder = folder;
+                    this.renderDirectory();
+                    this.updateBreadcrumb();
+                    this.updateStatistics();
+                } catch (error) {
+                    this.showError(`Error: ${error.message}<br><br>Make sure:<br>1. The folder "${folder}" exists<br>2. manifest.json is in that folder<br>3. You've run: generate-manifest.php?folder=${folder}&save=1&key=YOUR_API_KEY`);
+                } finally {
+                    this.showLoading(false);
+                }
+            }
+
+            renderDirectory() {
+                const treeContainer = document.getElementById('fileTree');
+                const emptyContainer = document.getElementById('emptyContainer');
+
+                if (!this.manifest || !this.manifest.children || this.manifest.children.length === 0) {
+                    document.getElementById('treeContainer').style.display = 'none';
+                    emptyContainer.style.display = 'block';
+                    return;
+                }
+
+                treeContainer.innerHTML = '';
+                this.manifest.children.forEach(item => {
+                    treeContainer.appendChild(this.createNodeElement(item, this.currentFolder));
+                });
+
+                document.getElementById('treeContainer').style.display = 'block';
+                emptyContainer.style.display = 'none';
+            }
+
+            createNodeElement(item, basePath) {
+                const li = document.createElement('li');
+                const isFolder = item.type === 'folder';
+
+                const nodeContent = document.createElement('div');
+                nodeContent.className = 'node-content';
+
+                // Toggle button for folders
+                const toggleBtn = document.createElement('span');
+                toggleBtn.className = 'node-toggle';
+                if (isFolder) {
+                    toggleBtn.innerHTML = '<span class="toggle-btn">▼</span>';
+                    toggleBtn.style.cursor = 'pointer';
+                } else {
+                    toggleBtn.innerHTML = '';
+                }
+
+                // Icon
+                const icon = document.createElement('span');
+                icon.className = 'node-icon';
+                icon.innerHTML = isFolder ? '<i class="fas fa-folder"></i>' : '<i class="fas fa-file"></i>';
+
+                // Name
+                const name = document.createElement('span');
+                name.className = 'node-name';
+                
+                if (isFolder) {
+                    name.textContent = item.name;
+                } else {
+                    const link = document.createElement('a');
+                    link.href = `${basePath}/${item.path}`;
+                    link.className = 'file-link';
+                    link.textContent = item.name;
+                    link.target = '_blank';
+                    name.appendChild(link);
+                }
+
+                // Size
+                const size = document.createElement('span');
+                size.className = 'node-size';
+                if (item.type === 'file') {
+                    size.textContent = this.formatFileSize(item.size);
+                } else {
+                    const fileCount = this.countFiles(item);
+                    size.textContent = `${fileCount} file${fileCount !== 1 ? 's' : ''}`;
+                }
+
+                // Download button for files
+                const downloadBtn = document.createElement('a');
+                downloadBtn.className = 'download-btn';
+                downloadBtn.href = `${basePath}/${item.path}`;
+                downloadBtn.download = '';
+                downloadBtn.innerHTML = '<i class="fas fa-download"></i>';
+
+                nodeContent.appendChild(toggleBtn);
+                nodeContent.appendChild(icon);
+                nodeContent.appendChild(name);
+                nodeContent.appendChild(size);
+                if (item.type === 'file') {
+                    nodeContent.appendChild(downloadBtn);
+                }
+
+                li.appendChild(nodeContent);
+
+                // Children (for folders)
+                if (isFolder && item.children && item.children.length > 0) {
+                    const childrenUl = document.createElement('ul');
+                    childrenUl.className = 'tree-node children visible';
+
+                    item.children.forEach(child => {
+                        childrenUl.appendChild(this.createNodeElement(child, `${basePath}/${item.name}`));
+                    });
+
+                    li.appendChild(childrenUl);
+
+                    // Toggle functionality
+                    toggleBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const isVisible = childrenUl.classList.contains('visible');
+                        childrenUl.classList.toggle('visible');
+                        const toggleIcon = toggleBtn.querySelector('.toggle-btn');
+                        if (isVisible) {
+                            toggleIcon.classList.add('collapsed');
+                        } else {
+                            toggleIcon.classList.remove('collapsed');
+                        }
+                    });
+                }
+
+                return li;
+            }
+
+            countFiles(item) {
+                if (item.type === 'file') return 1;
+                if (!item.children) return 0;
+                return item.children.reduce((count, child) => count + this.countFiles(child), 0);
+            }
+
+            formatFileSize(bytes) {
+                if (bytes === 0) return '0 B';
+                const k = 1024;
+                const sizes = ['B', 'KB', 'MB', 'GB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                return Math.round((bytes / Math.pow(k, i)) * 100) / 100 + ' ' + sizes[i];
+            }
+
+            updateBreadcrumb() {
+                const breadcrumb = document.getElementById('breadcrumb');
+                breadcrumb.innerHTML = `
+                    <a onclick="browser.resetView()" style="cursor: pointer;"><i class="fas fa-home"></i></a> / 
+                    <strong>${this.currentFolder}</strong>
+                `;
+                breadcrumb.style.display = 'block';
+            }
+
+            updateStatistics() {
+                const stats = this.calculateStats(this.manifest.children);
+                const statsContainer = document.getElementById('statistics');
+                
+                statsContainer.innerHTML = `
+                    <div class="stat-box">
+                        <div class="number">${stats.folders}</div>
+                        <div class="label">Folders</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="number">${stats.files}</div>
+                        <div class="label">Files</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="number">${this.formatFileSize(stats.totalSize)}</div>
+                        <div class="label">Total Size</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="number">${stats.largestFile}</div>
+                        <div class="label">Largest File</div>
+                    </div>
+                `;
+
+                document.getElementById('statisticsContainer').style.display = 'grid';
+            }
+
+            calculateStats(items) {
+                let folders = 0;
+                let files = 0;
+                let totalSize = 0;
+                let largestFileSize = 0;
+
+                items.forEach(item => {
+                    if (item.type === 'folder') {
+                        folders++;
+                        if (item.children) {
+                            const childStats = this.calculateStats(item.children);
+                            files += childStats.files;
+                            totalSize += childStats.totalSize;
+                            largestFileSize = Math.max(largestFileSize, childStats.largestFileSize);
+                            folders += childStats.folders;
+                        }
+                    } else {
+                        files++;
+                        totalSize += item.size || 0;
+                        largestFileSize = Math.max(largestFileSize, item.size || 0);
+                    }
+                });
+
+                return {
+                    folders,
+                    files,
+                    totalSize,
+                    largestFile: this.formatFileSize(largestFileSize)
+                };
+            }
+
+            showLoading(show) {
+                document.getElementById('loadingContainer').style.display = show ? 'block' : 'none';
+            }
+
+            showError(message) {
+                const errorContainer = document.getElementById('errorContainer');
+                errorContainer.innerHTML = `<div class="error">${message}</div>`;
+                errorContainer.style.display = 'block';
+                document.getElementById('treeContainer').style.display = 'none';
+                document.getElementById('statisticsContainer').style.display = 'none';
+            }
+
+            hideError() {
+                document.getElementById('errorContainer').style.display = 'none';
+            }
+
+            resetView() {
+                document.getElementById('folderInput').value = '';
+                document.getElementById('treeContainer').style.display = 'none';
+                document.getElementById('statisticsContainer').style.display = 'none';
+                document.getElementById('breadcrumb').style.display = 'none';
+                document.getElementById('emptyContainer').style.display = 'none';
+                this.hideError();
+            }
+        }
+
+        const browser = new DirectoryBrowser();
+
+        // Load default folder on page load
+        window.addEventListener('load', () => {
+            const defaultFolder = new URLSearchParams(window.location.search).get('folder');
+            if (defaultFolder) {
+                document.getElementById('folderInput').value = defaultFolder;
+                browser.loadDirectory();
+            }
+        });
+
+        // Allow Enter key to load directory
+        document.getElementById('folderInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                loadDirectory();
+            }
+        });
+
+        function loadDirectory() {
+            browser.loadDirectory();
+        }
+    </script>
+</body>
+</html>
