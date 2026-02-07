@@ -699,7 +699,9 @@ html {
 }
 
 .experience-sidebar {
-  flex: 0 0 150px;
+  flex: 0 0 auto;
+  min-width: 280px;
+  max-width: 95%;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -1554,6 +1556,8 @@ footer::before {
   .experience-sidebar {
     order: 1;
     margin-bottom: 20px;
+    min-width: auto;
+    max-width: 95%;
   }
   
   .experience-content {
@@ -1870,6 +1874,8 @@ footer::before {
   
   .experience-sidebar {
     order: 1;
+    min-width: 280px;
+    max-width: 95%;
   }
   
   .experience-content {
