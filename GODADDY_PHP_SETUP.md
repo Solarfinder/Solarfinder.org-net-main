@@ -9,20 +9,31 @@ This guide will help you set up the secure File Explorer API on GoDaddy shared h
 - `api.php` - The PHP API server
 - `config.php` - Configuration file with API key
 - `file-explorer.html` - The web interface
-- `generate-manifest.js` - Manifest generator (run locally)
+- `generate-manifest.php` - **NEW!** Web-based manifest generator (no dependencies needed)
+- `generate-manifest.js` - Manifest generator (run locally on your computer, optional)
 
-## Step 1: Generate Manifest Locally
+## Step 1: Upload Files to GoDaddy
 
-First, generate the manifest.json file for your folders on your local computer:
+Using FTP or File Manager in GoDaddy cPanel:
 
-```bash
-# On your computer (requires Node.js)
-node generate-manifest.js ./pub_ab
+```
+/public_html/
+├── api.php                    ← Upload this
+├── config.php                 ← Upload this  
+├── file-explorer.html         ← Upload this
+├── generate-manifest.php      ← Upload this (NEW!)
+├── style.css                  ← Existing
+├── index.html                 ← Existing
+│
+├── pub_ab/
+│   └── Expeditionary_Force/
+│       └── *.mp3              ← Your audio files
+│
+└── assets/
+    └── ...
 ```
 
-This creates: `pub_ab/manifest.json`
-
-## Step 2: Upload Files to GoDaddy
+## Step 2: Configure API Key
 
 Using FTP or File Manager in GoDaddy cPanel:
 
@@ -43,27 +54,7 @@ Using FTP or File Manager in GoDaddy cPanel:
     └── ...
 ```
 
-## Step 3: Configure API Key
-
-1. Upload `config.php` to your public_html root
-2. Edit `config.php` via FTP or cPanel File Manager
-3. Change the API_KEY to something secure:
-
-```php
-// Generate a secure key with this command (run on your computer):
-// php -r "echo bin2hex(random_bytes(32));"
-
-define('API_KEY', 'your-generated-secure-key-here');
-```
-
-Or via command line (if you have SSH access):
-
-```bash
-ssh youruser@yourdomain.com
-php -r "echo bin2hex(random_bytes(32));"
-```
-
-## Step 4: Configure File Explorer
+## Step 3: Configure File Explorer
 
 Edit `file-explorer.html` and update the API URL:
 
@@ -86,6 +77,68 @@ Or set it in browser console:
 ```javascript
 localStorage.setItem('fileExplorerApiKey', 'your-api-key-here');
 ```
+
+Before this, edit `config.php` via FTP or cPanel File Manager and set your API key:
+
+```php
+define('API_KEY', 'your-generated-secure-key-here');
+```
+
+Generate a secure key:
+```bash
+# On any computer with PHP:
+php -r "echo bin2hex(random_bytes(32));"
+```
+
+## Step 4: Generate Manifest File
+
+Once all files are uploaded and `config.php` is configured, generate a manifest.json file for your folders:
+
+### Option A: Web-Based Generation ⭐ (Recommended - No Dependencies)
+
+**Simply visit this URL in your browser:**
+
+```
+https://yourdomain.com/generate-manifest.php?folder=pub_ab&save=1&key=YOUR_API_KEY
+```
+
+Replace:
+- `yourdomain.com` with your actual domain
+- `pub_ab` with your folder name
+- `YOUR_API_KEY` with the same API key from `config.php`
+
+**The script will:**
+- Scan the directory recursively
+- Generate the manifest structure
+- Save `manifest.json` to the folder automatically
+- Return a success message with item count
+
+**Example Response:**
+```json
+{
+  "status": "success",
+  "message": "manifest.json saved to pub_ab/manifest.json",
+  "path": "/public_html/pub_ab/manifest.json",
+  "size": 12547,
+  "itemCount": 42
+}
+```
+
+**Just preview without saving:**
+```
+https://yourdomain.com/generate-manifest.php?folder=pub_ab&key=YOUR_API_KEY
+```
+
+### Option B: Local Generation (Node.js - Run on Your Computer)
+
+If you prefer generating locally:
+
+```bash
+# On your computer (requires Node.js)
+node generate-manifest.js ./pub_ab
+```
+
+Then upload the generated `pub_ab/manifest.json` via FTP.
 
 ## Step 5: Test the Setup
 
@@ -119,7 +172,17 @@ localStorage.setItem('fileExplorerApiKey', 'your-api-key-here');
 GET /api.php?action=health
 ```
 
-### Get Manifest (Requires API Key)
+### Generate Manifest (Requires API Key)
+```
+GET /generate-manifest.php?folder=pub_ab&save=1&key=YOUR_API_KEY
+```
+
+**Parameters:**
+- `folder` - Folder path to scan (relative to public_html)
+- `save` - Set to 1 to save manifest.json to the folder
+- `key` - Your API key from config.php
+
+### Get Manifest via API (Requires API Key)
 ```
 GET /api.php?action=manifest&folder=pub_ab
 Headers:
