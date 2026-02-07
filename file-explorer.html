@@ -593,17 +593,35 @@
         this.isUrlMode = false;
         
         // API Configuration
-        // Set this to your backend API server URL (e.g., http://localhost:3000)
-        // Leave empty to use direct file access (less secure)
-        this.apiUrl = window.location.hostname === 'localhost' 
-          ? 'http://localhost:3000' 
-          : ''; // Use the current domain
+        // For GoDaddy/PHP hosting: Set to your domain URL
+        // For localhost: Set to http://localhost:3000 (Node.js) or empty for direct file access
+        this.apiUrl = this.detectApiUrl();
         
-        // API Key for backend authentication
-        // Get this from your environment configuration
+        // API Key - Set this for authenticated API access
+        // Get from localStorage or prompt user
         this.apiKey = localStorage.getItem('fileExplorerApiKey') || '';
 
         this.init();
+      }
+
+      detectApiUrl() {
+        const hostname = window.location.hostname;
+        
+        // Local development
+        if (hostname === 'localhost' || hostname === '127.0.0.1') {
+          return 'http://localhost:3000'; // Node.js server
+        }
+        
+        // Production - detect if API is available
+        // For GoDaddy/shared hosting, this will use api.php on same domain
+        // For others, this can be configured manually
+        const potentialUrls = [
+          window.location.origin, // Same domain
+          'http://localhost:3000', // Node.js fallback
+          '' // Direct file access
+        ];
+        
+        return window.location.origin; // Use same domain by default
       }
 
       init() {
@@ -645,6 +663,20 @@
         document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
       }
 
+      setApiKey(key) {
+        this.apiKey = key;
+        localStorage.setItem('fileExplorerApiKey', key);
+      }
+
+      promptForApiKey() {
+        const key = prompt('This folder requires an API key.\nEnter your API key:');
+        if (key) {
+          this.setApiKey(key);
+          return true;
+        }
+        return false;
+      }
+
       async loadFromUrl() {
         const url = this.urlInput.value.trim();
         
@@ -684,11 +716,16 @@
         // Remove leading/trailing slashes
         folderPath = folderPath.trim().replace(/^\/+|\/+$/g, '');
 
+        // Check for API key
         if (!this.apiKey) {
-          throw new Error('API key not configured. Please contact administrator.');
+          if (this.promptForApiKey()) {
+            // Retry with new key
+            return this.loadFromSecureApi(folderPath);
+          }
+          throw new Error('API key required to access this folder.');
         }
 
-        const url = `${this.apiUrl}/api/manifest?folder=${encodeURIComponent(folderPath)}`;
+        const url = `${this.apiUrl}/api.php?action=manifest&folder=${encodeURIComponent(folderPath)}`;
         
         const response = await fetch(url, {
           method: 'GET',
@@ -701,6 +738,14 @@
         if (!response.ok) {
           const errorData = await response.json().catch(() => ({}));
           const message = errorData.message || `HTTP ${response.status}: ${response.statusText}`;
+          
+          // Handle 401 - API key issue
+          if (response.status === 401) {
+            if (this.promptForApiKey()) {
+              return this.loadFromSecureApi(folderPath);
+            }
+          }
+          
           throw new Error(`API Error: ${message}`);
         }
 
