@@ -361,6 +361,54 @@
       to { transform: rotate(360deg); }
     }
 
+    .tree-controls {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .tree-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0;
+      color: #333;
+      font-size: 1.1rem;
+    }
+
+    .refresh-btn {
+      background: linear-gradient(135deg, rgba(255, 165, 0, 0.3) 0%, rgba(255, 165, 0, 0.2) 100%);
+      border: 1px solid rgba(255, 165, 0, 0.5);
+      color: #333;
+      padding: 10px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+
+    .refresh-btn:hover:not(:disabled) {
+      background: linear-gradient(135deg, rgba(255, 165, 0, 0.4) 0%, rgba(255, 165, 0, 0.3) 100%);
+      border-color: rgba(255, 165, 0, 0.8);
+      transform: translateY(-2px);
+    }
+
+    .refresh-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .refresh-btn.spinning i {
+      animation: spin 1s linear infinite;
+    }
+
     @media (max-width: 768px) {
       .upload-section {
         padding: 30px 20px;
@@ -506,6 +554,16 @@
             </div>
 
             <!-- Folder Tree Display -->
+            <div id="treeControls" class="tree-controls" style="display: none;">
+              <h3 class="tree-title">
+                <i class="fas fa-folder-open"></i>
+                <span id="treeTitle">Files</span>
+              </h3>
+              <button class="refresh-btn" id="refreshBtn" title="Refresh folder tree">
+                <i class="fas fa-sync-alt"></i>
+                <span>Refresh</span>
+              </button>
+            </div>
             <div id="treeContainer"></div>
           </div>
         </div>
@@ -524,11 +582,15 @@
         this.uploadBtn = document.getElementById('uploadBtn');
         this.folderInput = document.getElementById('folderInput');
         this.treeContainer = document.getElementById('treeContainer');
+        this.treeControls = document.getElementById('treeControls');
+        this.treeTitle = document.getElementById('treeTitle');
+        this.refreshBtn = document.getElementById('refreshBtn');
         this.urlInput = document.getElementById('urlInput');
         this.loadBtn = document.getElementById('loadBtn');
         this.fileStructure = {};
         this.stats = { folders: 0, files: 0, totalSize: 0 };
         this.currentUrl = null;
+        this.isUrlMode = false;
 
         this.init();
       }
@@ -549,6 +611,9 @@
         this.urlInput.addEventListener('keypress', (e) => {
           if (e.key === 'Enter') this.loadFromUrl();
         });
+
+        // Refresh button functionality
+        this.refreshBtn.addEventListener('click', () => this.refresh());
       }
 
       switchTab(tabName) {
@@ -612,6 +677,7 @@
       }
 
       buildStructureFromManifest(manifestData) {
+        this.isUrlMode = true;
         this.fileStructure = {};
         this.stats = { folders: new Set(), files: 0, totalSize: 0 };
 
@@ -672,6 +738,7 @@
         const files = Array.from(e.target.files);
         if (files.length === 0) return;
 
+        this.isUrlMode = false;
         this.fileStructure = {};
         this.stats = { folders: new Set(), files: 0, totalSize: 0 };
 
@@ -719,6 +786,7 @@
               <p>No files loaded. Upload a folder to get started.</p>
             </div>
           `;
+          this.treeControls.style.display = 'none';
           return;
         }
 
@@ -754,6 +822,61 @@
         folderDiv.appendChild(stats);
 
         this.treeContainer.appendChild(folderDiv);
+
+        // Show controls after rendering
+        this.treeControls.style.display = 'flex';
+      }
+
+      refresh() {
+        if (!this.fileStructure || Object.keys(this.fileStructure).length === 0) {
+          alert('No folder loaded. Please load a folder first.');
+          return;
+        }
+
+        this.refreshBtn.disabled = true;
+        this.refreshBtn.classList.add('spinning');
+        const originalHtml = this.refreshBtn.innerHTML;
+
+        const handleRefreshComplete = () => {
+          this.refreshBtn.disabled = false;
+          this.refreshBtn.classList.remove('spinning');
+          this.refreshBtn.innerHTML = originalHtml;
+        };
+
+        // If loaded from URL, re-fetch the manifest
+        if (this.isUrlMode && this.currentUrl) {
+          (async () => {
+            try {
+              let manifestUrl = this.currentUrl;
+              if (!manifestUrl.startsWith('/') && !manifestUrl.startsWith('./')) {
+                manifestUrl = './' + manifestUrl;
+              }
+              if (!manifestUrl.endsWith('/')) {
+                manifestUrl += '/';
+              }
+
+              const response = await fetch(manifestUrl + 'manifest.json');
+              if (!response.ok) {
+                throw new Error(`Could not refresh manifest.json`);
+              }
+
+              const manifest = await response.json();
+              this.buildStructureFromManifest(manifest);
+              this.render();
+              handleRefreshComplete();
+            } catch (error) {
+              console.error('Error refreshing folder:', error);
+              alert(`Error refreshing folder: ${error.message}`);
+              handleRefreshComplete();
+            }
+          })();
+        } else {
+          // If uploaded, just re-render
+          setTimeout(() => {
+            this.render();
+            handleRefreshComplete();
+          }, 400);
+        }
       }
 
       renderNode(obj, parentUl) {
