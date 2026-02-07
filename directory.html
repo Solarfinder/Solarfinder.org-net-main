@@ -406,7 +406,7 @@
                     link.href = `${basePath}/${item.path}`;
                     link.className = 'file-link';
                     link.textContent = item.name;
-                    link.target = '_blank';
+                    link.download = item.name; // Force download with original filename
                     name.appendChild(link);
                 }
 
