@@ -1,0 +1,544 @@
+{
+  "name": "pub_ab",
+  "description": "File listing for pub_ab",
+  "generated": "2026-02-07T20:09:28.589Z",
+  "files": [
+    {
+      "name": "manifest.json",
+      "path": "/pub_ab/manifest.json",
+      "size": 17662,
+      "type": "application/json"
+    }
+  ],
+  "folders": [
+    {
+      "name": "Armored Souls",
+      "files": [
+        {
+          "name": "Armored_Souls_The_Complete_Collection_Books1-3.mp3",
+          "path": "/pub_ab/Armored Souls/Armored_Souls_The_Complete_Collection_Books1-3.mp3",
+          "size": 1676513672,
+          "type": "audio/mpeg",
+          "audio": {
+            "duration": 104748.016327,
+            "bitrate": 128041,
+            "sampleRate": 22050,
+            "channels": 2,
+            "codec": "mp3"
+          }
+        }
+      ],
+      "folders": []
+    },
+    {
+      "name": "Enchanters Child",
+      "files": [
+        {
+          "name": "Enchanter_Child-Midnight_Train_Book2.mp3",
+          "path": "/pub_ab/Enchanters Child/Enchanter_Child-Midnight_Train_Book2.mp3",
+          "size": 449042890,
+          "type": "audio/mpeg",
+          "audio": {
+            "duration": 28027.115102,
+            "bitrate": 128173,
+            "sampleRate": 44100,
+            "channels": 2,
+            "codec": "mp3"
+          }
+        },
+        {
+          "name": "Enchatner_Child-TwilightHauntings_Book1.mp3",
+          "path": "/pub_ab/Enchanters Child/Enchatner_Child-TwilightHauntings_Book1.mp3",
+          "size": 451772304,
+          "type": "audio/mpeg",
+          "audio": {
+            "duration": 28198.896327,
+            "bitrate": 128167,
+            "sampleRate": 44100,
+            "channels": 2,
+            "codec": "mp3"
+          }
+        }
+      ],
+      "folders": []
+    },
+    {
+      "name": "Expeditionary_Force",
+      "files": [
+        {
+          "name": "Expeditionary_Force_Book10-CriticalMass.mp3",
+          "path": "/pub_ab/Expeditionary_Force/Expeditionary_Force_Book10-CriticalMass.mp3",
+          "size": 1119594769,
+          "type": "audio/mpeg",
+          "audio": {
+            "duration": 69950.066939,
+            "bitrate": 128045,
+            "sampleRate": 44100,
+            "channels": 2,
+            "codec": "mp3"
+          }
+        },
+        {
+          "name": "Expeditionary_Force_Book11-Brushfire.mp3",
+          "path": "/pub_ab/Expeditionary_Force/Expeditionary_Force_Book11-Brushfire.mp3",
+          "size": 1112467219,
+          "type": "audio/mpeg",
+          "audio": {
+            "duration": 69504.235102,
+            "bitrate": 128045,
+            "sampleRate": 44100,
+            "channels": 2,
+            "codec": "mp3"
+          }
+        },
+        {
+          "name": "Expeditionary_Force_Book12-Breakaway.mp3",
+          "path": "/pub_ab/Expeditionary_Force/Expeditionary_Force_Book12-Breakaway.mp3",
+          "size": 1116071890,
+          "type": "audio/mpeg",
+          "audio": {
+            "duration": 69734.530612,
+            "bitrate": 128036,
+            "sampleRate": 44100,
+            "channels": 2,
+            "codec": "mp3"
+          }
+        },
+        {
+          "name": "Expeditionary_Force_Book13-Fallout.mp3",
+          "path": "/pub_ab/Expeditionary_Force/Expeditionary_Force_Book13-Fallout.mp3",
+          "size": 1295703607,
+          "type": "audio/mpeg",
+          "audio": {
+            "duration": 80961.541224,
+            "bitrate": 128031,
+            "sampleRate": 44100,
+            "channels": 2,
+            "codec": "mp3"
+          }
+        },
+        {
+          "name": "Expeditionary_Force_Book14-Match_Game.mp3",
+          "path": "/pub_ab/Expeditionary_Force/Expeditionary_Force_Book14-Match_Game.mp3",
+          "size": 1172046627,
+          "type": "audio/mpeg",
+          "audio": {
+            "duration": 73229.923265,
+            "bitrate": 128040,
+            "sampleRate": 44100,
+            "channels": 2,
+            "codec": "mp3"
+          }
+        },
+        {
+          "name": "Expeditionary_Force_Book15-Failure_Mode.mp3",
+          "path": "/pub_ab/Expeditionary_Force/Expeditionary_Force_Book15-Failure_Mode.mp3",
+          "size": 1116594976,
+          "type": "audio/mpeg",
+          "audio": {
+            "duration": 69767.000816,
+            "bitrate": 128037,
+            "sampleRate": 44100,
+            "channels": 2,
+            "codec": "mp3"
+          }
+        },
+        {
+          "name": "Expeditionary_Force_Book16-Aftermath.mp3",
+          "path": "/pub_ab/Expeditionary_Force/Expeditionary_Force_Book16-Aftermath.mp3",
+          "size": 1104924150,
+          "type": "audio/mpeg",
+          "audio": {
+            "duration": 69031.418776,
+            "bitrate": 128048,
+            "sampleRate": 44100,
+            "channels": 2,
+            "codec": "mp3"
+          }
+        },
+        {
+          "name": "Expeditionary_Force_Book17-Task_Force_Hammer.mp3",
+          "path": "/pub_ab/Expeditionary_Force/Expeditionary_Force_Book17-Task_Force_Hammer.mp3",
+          "size": 1276947941,
+          "type": "audio/mpeg",
+          "audio": {
+            "duration": 79784.411429,
+            "bitrate": 128039,
+            "sampleRate": 44100,
+            "channels": 2,
+            "codec": "mp3"
+          }
+        },
+        {
+          "name": "Expeditionary_Force_Book18-Gateway.mp3",
+          "path": "/pub_ab/Expeditionary_Force/Expeditionary_Force_Book18-Gateway.mp3",
+          "size": 1120293251,
+          "type": "audio/mpeg",
+          "audio": {
+            "duration": 69999.595102,
+            "bitrate": 128034,
+            "sampleRate": 44100,
+            "channels": 2,
+            "codec": "mp3"
+          }
+        },
+        {
+          "name": "Expeditionary_Force_Book19-Ground_State.mp3",
+          "path": "/pub_ab/Expeditionary_Force/Expeditionary_Force_Book19-Ground_State.mp3",
+          "size": 1114655322,
+          "type": "audio/mpeg",
+          "audio": {
+            "duration": 69639.105306,
+            "bitrate": 128049,
+            "sampleRate": 44100,
+            "channels": 2,
+            "codec": "mp3"
+          }
+        },
+        {
+          "name": "Expeditionary_Force_Book7-Renegades.mp3",
+          "path": "/pub_ab/Expeditionary_Force/Expeditionary_Force_Book7-Renegades.mp3",
+          "size": 987030609,
+          "type": "audio/mpeg",
+          "audio": {
+            "duration": 61670.765714,
+            "bitrate": 128038,
+            "sampleRate": 22050,
+            "channels": 2,
+            "codec": "mp3"
+          }
+        },
+        {
+          "name": "Expeditionary_Force_Book8-Armageddon.mp3",
+          "path": "/pub_ab/Expeditionary_Force/Expeditionary_Force_Book8-Armageddon.mp3",
+          "size": 1029162268,
+          "type": "audio/mpeg",
+          "audio": {
+            "duration": 64296.672653,
+            "bitrate": 128051,
+            "sampleRate": 44100,
+            "channels": 2,
+            "codec": "mp3"
+          }
+        },
+        {
+          "name": "Expeditionary_Force_Book9-Valkyrie.mp3",
+          "path": "/pub_ab/Expeditionary_Force/Expeditionary_Force_Book9-Valkyrie.mp3",
+          "size": 1138684751,
+          "type": "audio/mpeg",
+          "audio": {
+            "duration": 71146.501224,
+            "bitrate": 128038,
+            "sampleRate": 44100,
+            "channels": 2,
+            "codec": "mp3"
+          }
+        },
+        {
+          "name": "Expeditionary_Force-Mavericks_Book1-Force-Deathtrap.mp3",
+          "path": "/pub_ab/Expeditionary_Force/Expeditionary_Force-Mavericks_Book1-Force-Deathtrap.mp3",
+          "size": 867712092,
+          "type": "audio/mpeg",
+          "audio": {
+            "duration": 54202.122449,
+            "bitrate": 128070,
+            "sampleRate": 22050,
+            "channels": 2,
+            "codec": "mp3"
+          }
+        },
+        {
+          "name": "Expeditionary_Force-Mavericks_Book2-Freefall.mp3",
+          "path": "/pub_ab/Expeditionary_Force/Expeditionary_Force-Mavericks_Book2-Freefall.mp3",
+          "size": 1114081177,
+          "type": "audio/mpeg",
+          "audio": {
+            "duration": 69602.742857,
+            "bitrate": 128050,
+            "sampleRate": 44100,
+            "channels": 2,
+            "codec": "mp3"
+          }
+        }
+      ],
+      "folders": []
+    },
+    {
+      "name": "Harry Potter",
+      "files": [],
+      "folders": [
+        {
+          "name": "Jim Dale",
+          "files": [
+            {
+              "name": "Harry_Potter_and_The_Chamber_of_Secrets_Book2.mp3",
+              "path": "/pub_ab//pub_ab/Harry Potter/Jim Dale/Harry_Potter_and_The_Chamber_of_Secrets_Book2.mp3",
+              "size": 521913522,
+              "type": "audio/mpeg",
+              "audio": {
+                "duration": 32578.76898,
+                "bitrate": 128160,
+                "sampleRate": 44100,
+                "channels": 2,
+                "codec": "mp3"
+              }
+            },
+            {
+              "name": "Harry_Potter_and_the_Deathly_Hallows_Book7.mp3",
+              "path": "/pub_ab//pub_ab/Harry Potter/Jim Dale/Harry_Potter_and_the_Deathly_Hallows_Book7.mp3",
+              "size": 1245266500,
+              "type": "audio/mpeg",
+              "audio": {
+                "duration": 77791.059592,
+                "bitrate": 128062,
+                "sampleRate": 44100,
+                "channels": 2,
+                "codec": "mp3"
+              }
+            },
+            {
+              "name": "Harry_Potter_and_The_Goblet_of_Fire_Book4.mp3",
+              "path": "/pub_ab//pub_ab/Harry Potter/Jim Dale/Harry_Potter_and_The_Goblet_of_Fire_Book4.mp3",
+              "size": 1187721011,
+              "type": "audio/mpeg",
+              "audio": {
+                "duration": 74194.181224,
+                "bitrate": 128066,
+                "sampleRate": 44100,
+                "channels": 2,
+                "codec": "mp3"
+              }
+            },
+            {
+              "name": "Harry_Potter_and_The_Half_Blood_Prince_Book6.mp3",
+              "path": "/pub_ab//pub_ab/Harry Potter/Jim Dale/Harry_Potter_and_The_Half_Blood_Prince_Book6.mp3",
+              "size": 1068263621,
+              "type": "audio/mpeg",
+              "audio": {
+                "duration": 66734.341224,
+                "bitrate": 128061,
+                "sampleRate": 44100,
+                "channels": 2,
+                "codec": "mp3"
+              }
+            },
+            {
+              "name": "Harry_Potter_and_The_Order_Of_The_Phoenix_Book5.mp3",
+              "path": "/pub_ab//pub_ab/Harry Potter/Jim Dale/Harry_Potter_and_The_Order_Of_The_Phoenix_Book5.mp3",
+              "size": 763244316,
+              "type": "audio/mpeg",
+              "audio": {
+                "duration": 95347.382857,
+                "bitrate": 64039,
+                "sampleRate": 22050,
+                "channels": 2,
+                "codec": "mp3"
+              }
+            },
+            {
+              "name": "Harry_Potter_and_The_Prizoner_of_Azkaban_Book3.mp3",
+              "path": "/pub_ab//pub_ab/Harry Potter/Jim Dale/Harry_Potter_and_The_Prizoner_of_Azkaban_Book3.mp3",
+              "size": 681517151,
+              "type": "audio/mpeg",
+              "audio": {
+                "duration": 42557.33551,
+                "bitrate": 128112,
+                "sampleRate": 44100,
+                "channels": 2,
+                "codec": "mp3"
+              }
+            },
+            {
+              "name": "Harry_Potter_and_the_Sorcerers_Stone_Book1.mp3",
+              "path": "/pub_ab//pub_ab/Harry Potter/Jim Dale/Harry_Potter_and_the_Sorcerers_Stone_Book1.mp3",
+              "size": 479150097,
+              "type": "audio/mpeg",
+              "audio": {
+                "duration": 29908.845714,
+                "bitrate": 128162,
+                "sampleRate": 44100,
+                "channels": 2,
+                "codec": "mp3"
+              }
+            }
+          ],
+          "folders": []
+        },
+        {
+          "name": "Stephen Fry",
+          "files": [
+            {
+              "name": "Harry_Potter_and_the_Chamber_of_Secrets_Book2_GBR_Version-StephenFry.mp3",
+              "path": "/pub_ab//pub_ab/Harry Potter/Stephen Fry/Harry_Potter_and_the_Chamber_of_Secrets_Book2_GBR_Version-StephenFry.mp3",
+              "size": 560636079,
+              "type": "audio/mpeg",
+              "audio": {
+                "duration": 35000.293878,
+                "bitrate": 128144,
+                "sampleRate": 44100,
+                "channels": 2,
+                "codec": "mp3"
+              }
+            },
+            {
+              "name": "Harry_Potter_and_The_Philosophers_Stone_Book1_GBR_Version_StephenFry.mp3",
+              "path": "/pub_ab//pub_ab/Harry Potter/Stephen Fry/Harry_Potter_and_The_Philosophers_Stone_Book1_GBR_Version_StephenFry.mp3",
+              "size": 485968914,
+              "type": "audio/mpeg",
+              "audio": {
+                "duration": 30340.440816,
+                "bitrate": 128137,
+                "sampleRate": 44100,
+                "channels": 2,
+                "codec": "mp3"
+              }
+            }
+          ],
+          "folders": []
+        }
+      ]
+    },
+    {
+      "name": "Septimus Heap",
+      "files": [
+        {
+          "name": "Septimus_Heap-Darke_Book6.mp3",
+          "path": "/pub_ab/Septimus Heap/Septimus_Heap-Darke_Book6.mp3",
+          "size": 779003893,
+          "type": "audio/mpeg",
+          "audio": {
+            "duration": 48646.373878,
+            "bitrate": 128108,
+            "sampleRate": 22050,
+            "channels": 2,
+            "codec": "mp3"
+          }
+        },
+        {
+          "name": "Septimus_Heap-Flyte_Book2.mp3",
+          "path": "/pub_ab/Septimus Heap/Septimus_Heap-Flyte_Book2.mp3",
+          "size": 655451335,
+          "type": "audio/mpeg",
+          "audio": {
+            "duration": 40931.317551,
+            "bitrate": 128107,
+            "sampleRate": 22050,
+            "channels": 2,
+            "codec": "mp3"
+          }
+        },
+        {
+          "name": "Septimus_Heap-Fyre_Book7.mp3",
+          "path": "/pub_ab/Septimus Heap/Septimus_Heap-Fyre_Book7.mp3",
+          "size": 869407186,
+          "type": "audio/mpeg",
+          "audio": {
+            "duration": 54298.383673,
+            "bitrate": 128093,
+            "sampleRate": 22050,
+            "channels": 2,
+            "codec": "mp3"
+          }
+        },
+        {
+          "name": "Septimus_Heap-Magyk_Book1.mp3",
+          "path": "/pub_ab/Septimus Heap/Septimus_Heap-Magyk_Book1.mp3",
+          "size": 701828345,
+          "type": "audio/mpeg",
+          "audio": {
+            "duration": 43822.445714,
+            "bitrate": 128122,
+            "sampleRate": 22050,
+            "channels": 2,
+            "codec": "mp3"
+          }
+        },
+        {
+          "name": "Septimus_Heap-Physik_Book3.mp3",
+          "path": "/pub_ab/Septimus Heap/Septimus_Heap-Physik_Book3.mp3",
+          "size": 697681427,
+          "type": "audio/mpeg",
+          "audio": {
+            "duration": 43567.25551,
+            "bitrate": 128111,
+            "sampleRate": 22050,
+            "channels": 2,
+            "codec": "mp3"
+          }
+        },
+        {
+          "name": "Septimus_Heap-Queste_Book4.mp3",
+          "path": "/pub_ab/Septimus Heap/Septimus_Heap-Queste_Book4.mp3",
+          "size": 812792664,
+          "type": "audio/mpeg",
+          "audio": {
+            "duration": 50765.662041,
+            "bitrate": 128085,
+            "sampleRate": 22050,
+            "channels": 2,
+            "codec": "mp3"
+          }
+        },
+        {
+          "name": "Septimus_Heap-Syren_Book5.mp3",
+          "path": "/pub_ab/Septimus Heap/Septimus_Heap-Syren_Book5.mp3",
+          "size": 810341904,
+          "type": "audio/mpeg",
+          "audio": {
+            "duration": 50607.307755,
+            "bitrate": 128098,
+            "sampleRate": 22050,
+            "channels": 2,
+            "codec": "mp3"
+          }
+        }
+      ],
+      "folders": []
+    },
+    {
+      "name": "Tod Hunter Moon",
+      "files": [
+        {
+          "name": "Tod_Hunter_Moon-Path_Finder_Book1.mp3",
+          "path": "/pub_ab/Tod Hunter Moon/Tod_Hunter_Moon-Path_Finder_Book1.mp3",
+          "size": 529047507,
+          "type": "audio/mpeg",
+          "audio": {
+            "duration": 33025.48898,
+            "bitrate": 128154,
+            "sampleRate": 22050,
+            "channels": 2,
+            "codec": "mp3"
+          }
+        },
+        {
+          "name": "Tod_Hunter_Moon-Sand Rider_Book2.mp3",
+          "path": "/pub_ab/Tod Hunter Moon/Tod_Hunter_Moon-Sand Rider_Book2.mp3",
+          "size": 518723840,
+          "type": "audio/mpeg",
+          "audio": {
+            "duration": 32376.946939,
+            "bitrate": 128171,
+            "sampleRate": 22050,
+            "channels": 2,
+            "codec": "mp3"
+          }
+        },
+        {
+          "name": "Tod_Hunter_Moon-Star_Chaser_Book3.mp3",
+          "path": "/pub_ab/Tod Hunter Moon/Tod_Hunter_Moon-Star_Chaser_Book3.mp3",
+          "size": 544192787,
+          "type": "audio/mpeg",
+          "audio": {
+            "duration": 33973.263673,
+            "bitrate": 128146,
+            "sampleRate": 22050,
+            "channels": 2,
+            "codec": "mp3"
+          }
+        }
+      ],
+      "folders": []
+    }
+  ]
+}

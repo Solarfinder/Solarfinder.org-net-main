@@ -479,10 +479,10 @@
 
                 card.innerHTML = `
                     <div class="book-title">
-                        <a href="${this.basePath}${cleanPath}" download="${book.name}">
+                        <a href="/${cleanPath}" download="${book.name}">
                             ${this.cleanFileName(book.name)}
                         </a>
-                        <i class="fas fa-download download-icon" onclick="event.stopPropagation(); location.href='${this.basePath}${cleanPath}'"></i>
+                        <i class="fas fa-download download-icon" onclick="event.stopPropagation(); location.href='/${cleanPath}'"></i>
                     </div>
                     <div class="book-meta">
                         ${narrator ? `<div class="meta-item"><i class="fas fa-user-circle"></i> <span class="meta-label">Narrator:</span> ${narrator}</div>` : ''}

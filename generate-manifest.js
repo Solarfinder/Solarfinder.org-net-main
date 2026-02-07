@@ -152,7 +152,15 @@ class ManifestGenerator {
           items.folders.push(folderData);
         } else if (entry.isFile()) {
           // Process file
-          const filePath = `${this.baseUrl}/${webPath}`;
+          // webPath may already include baseUrl when recursing; avoid duplicate prefixes
+          let filePath;
+          if (webPath.startsWith(this.baseUrl)) {
+            filePath = webPath; // already includes /pub_ab prefix
+          } else if (webPath.startsWith('/')) {
+            filePath = webPath; // absolute already
+          } else {
+            filePath = `${this.baseUrl}/${webPath}`;
+          }
           const fullPathFile = path.join(dirPath, entry.name);
           const fileSize = this.getFileSize(fullPathFile);
           const fileType = this.getMimeType(fullPathFile);
