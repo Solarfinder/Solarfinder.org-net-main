@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AudioBook List</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .navbar {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 15px 30px;
+            color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .navbar h1 {
+            font-size: 24px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .container {
+            display: flex;
+            flex: 1;
+            gap: 20px;
+            padding: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-height: calc(100vh - 100px);
+            overflow-y: auto;
+        }
+
+        .sidebar h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 18px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #ffa500;
+        }
+
+        .sidebar-list {
+            list-style: none;
+        }
+
+        .sidebar-list li {
+            margin: 8px 0;
+        }
+
+        .sidebar-list a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            color: #333;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .sidebar-list a:hover,
+        .sidebar-list a.active {
+            background: #ffa500;
+            color: white;
+            font-weight: bold;
+        }
+
+        .sidebar-list a i {
+            width: 20px;
+        }
+
+        .main-content {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-height: calc(100vh - 100px);
+            overflow-y: auto;
+        }
+
+        .content-header {
+            margin-bottom: 25px;
+            border-bottom: 2px solid #ffa500;
+            padding-bottom: 15px;
+        }
+
+        .content-header h2 {
+            color: #333;
+            font-size: 28px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .content-header .folder-stats {
+            font-size: 14px;
+            color: #666;
+            margin-top: 8px;
+        }
+
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .book-card {
+            background: #f9f9f9;
+            border: 1px solid #eee;
+            border-radius: 10px;
+            padding: 15px;
+            transition: all 0.3s;
+            border-left: 4px solid #ffa500;
+        }
+
+        .book-card:hover {
+            box-shadow: 0 5px 20px rgba(255, 165, 0, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .book-title {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+            word-break: break-word;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .book-title a {
+            color: #667eea;
+            text-decoration: none;
+            flex: 1;
+        }
+
+        .book-title a:hover {
+            text-decoration: underline;
+        }
+
+        .download-icon {
+            color: #ffa500;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .download-icon:hover {
+            color: #ff8c00;
+        }
+
+        .book-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .meta-item i {
+            width: 16px;
+            color: #ffa500;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #ffa500;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .empty-message {
+            padding: 40px;
+            text-align: center;
+            color: #999;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+            }
+
+            .books-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h1>
+            <i class="fas fa-headphones"></i>
+            AudioBook Library
+        </h1>
+    </div>
+
+    <div class="container">
+        <div class="sidebar">
+            <h2>Audiobooks</h2>
+            <ul class="sidebar-list" id="folderList"></ul>
+        </div>
+
+        <div class="main-content">
+            <div class="content-header">
+                <h2 id="selectedFolder">
+                    <i class="fas fa-book"></i>
+                    Select a book series
+                </h2>
+                <div class="folder-stats" id="folderStats"></div>
+            </div>
+
+            <div id="loadingContainer" style="display: none;" class="loading">
+                <div class="spinner"></div>
+                <span>Loading audiobooks...</span>
+            </div>
+
+            <div id="booksContainer" style="display: none;" class="books-grid"></div>
+
+            <div id="emptyContainer" style="display: none;" class="empty-message">
+                <p>No audiobooks found in this category.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class AudiobookList {
+            constructor() {
+                this.manifest = null;
+                this.basePath = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1);
+                this.folderPath = 'pub_ab';
+                this.currentFolder = null;
+            }
+
+            async init() {
+                await this.loadManifest();
+                this.buildSidebar();
+            }
+
+            async loadManifest() {
+                try {
+                    const response = await fetch(`${this.basePath}${this.folderPath}/manifest.json`);
+                    if (!response.ok) throw new Error('Failed to load manifest');
+                    this.manifest = await response.json();
+                } catch (error) {
+                    console.error('Error loading manifest:', error);
+                }
+            }
+
+            buildSidebar() {
+                const folderList = document.getElementById('folderList');
+                folderList.innerHTML = '';
+
+                if (!this.manifest || !this.manifest.children) return;
+
+                // Get folders with files
+                const foldersWithFiles = this.getFoldersWithFiles(this.manifest.children);
+
+                foldersWithFiles.forEach(folder => {
+                    const li = document.createElement('li');
+                    const a = document.createElement('a');
+                    a.innerHTML = `<i class="fas fa-folder"></i> <span>${folder.name}</span>`;
+                    a.onclick = () => this.selectFolder(folder);
+                    li.appendChild(a);
+                    folderList.appendChild(li);
+                });
+
+                // Auto-select first folder
+                if (foldersWithFiles.length > 0) {
+                    this.selectFolder(foldersWithFiles[0]);
+                }
+            }
+
+            getFoldersWithFiles(items) {
+                return items.filter(item => {
+                    if (item.type !== 'folder') return false;
+                    if (!item.children) return false;
+                    return this.hasAudioFiles(item.children);
+                });
+            }
+
+            hasAudioFiles(items) {
+                for (let item of items) {
+                    if (item.type === 'file' && item.mimeType === 'audio/mpeg') {
+                        return true;
+                    }
+                    if (item.type === 'folder' && item.children && this.hasAudioFiles(item.children)) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            selectFolder(folder) {
+                this.currentFolder = folder;
+                this.updateActiveButton(folder.name);
+                this.displayBooks();
+            }
+
+            updateActiveButton(folderName) {
+                document.querySelectorAll('.sidebar-list a').forEach(a => {
+                    a.classList.remove('active');
+                    if (a.textContent.includes(folderName)) {
+                        a.classList.add('active');
+                    }
+                });
+            }
+
+            displayBooks() {
+                const selectedHeader = document.getElementById('selectedFolder');
+                const folderStats = document.getElementById('folderStats');
+                const booksContainer = document.getElementById('booksContainer');
+                const emptyContainer = document.getElementById('emptyContainer');
+
+                selectedHeader.innerHTML = `<i class="fas fa-book"></i> ${this.currentFolder.name}`;
+
+                // Get all audio files recursively
+                const books = this.getAudioFilesRecursive(this.currentFolder.children);
+
+                if (books.length === 0) {
+                    booksContainer.style.display = 'none';
+                    emptyContainer.style.display = 'block';
+                    return;
+                }
+
+                const totalSize = books.reduce((sum, book) => sum + book.size, 0);
+                folderStats.innerHTML = `${books.length} audiobooks • ${this.formatFileSize(totalSize)}`;
+
+                booksContainer.innerHTML = '';
+                books.forEach(book => {
+                    booksContainer.appendChild(this.createBookCard(book));
+                });
+
+                booksContainer.style.display = 'grid';
+                emptyContainer.style.display = 'none';
+            }
+
+            getAudioFilesRecursive(items) {
+                let files = [];
+                if (!items) return files;
+
+                items.forEach(item => {
+                    if (item.type === 'file' && item.mimeType === 'audio/mpeg') {
+                        files.push(item);
+                    } else if (item.type === 'folder' && item.children) {
+                        files = files.concat(this.getAudioFilesRecursive(item.children));
+                    }
+                });
+
+                return files.sort((a, b) => a.name.localeCompare(b.name));
+            }
+
+            createBookCard(book) {
+                const card = document.createElement('div');
+                card.className = 'book-card';
+
+                const duration = this.estimateDuration(book.size);
+
+                card.innerHTML = `
+                    <div class="book-title">
+                        <a href="${this.basePath}${this.folderPath}${book.path}" download="${book.name}">
+                            ${this.cleanFileName(book.name)}
+                        </a>
+                        <i class="fas fa-download download-icon" onclick="event.stopPropagation(); location.href='${this.basePath}${this.folderPath}${book.path}'"></i>
+                    </div>
+                    <div class="book-meta">
+                        <div class="meta-item">
+                            <i class="fas fa-clock"></i>
+                            <span>${duration}</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-database"></i>
+                            <span>${this.formatFileSize(book.size)}</span>
+                        </div>
+                    </div>
+                `;
+
+                return card;
+            }
+
+            cleanFileName(name) {
+                return name
+                    .replace(/\.mp3$/i, '')
+                    .replace(/_/g, ' ')
+                    .replace(/Book (\d+)-/, 'Book $1: ')
+                    .trim();
+            }
+
+            estimateDuration(fileSize) {
+                // Estimate based on 128 kbps MP3 (approximately 1 MB per minute)
+                const minutes = Math.round(fileSize / (128 * 1024 / 8));
+                const hours = Math.floor(minutes / 60);
+                const mins = minutes % 60;
+
+                if (hours === 0) {
+                    return `${mins}m`;
+                }
+                return `${hours}h ${mins}m`;
+            }
+
+            formatFileSize(bytes) {
+                if (bytes === 0) return '0 B';
+                const k = 1024;
+                const sizes = ['B', 'KB', 'MB', 'GB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                return Math.round((bytes / Math.pow(k, i)) * 100) / 100 + ' ' + sizes[i];
+            }
+        }
+
+        const audioList = new AudiobookList();
+        window.addEventListener('load', () => audioList.init());
+    </script>
+</body>
+</html>
