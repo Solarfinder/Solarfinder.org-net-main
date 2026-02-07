@@ -322,7 +322,7 @@
                 this.basePath = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1);
             }
 
-            async loadDirectory() {
+            loadDirectory() {
                 const folderInput = document.getElementById('folderInput');
                 const folder = folderInput.value.trim();
 
@@ -344,6 +344,7 @@
 
                     this.manifest = await response.json();
                     this.currentFolder = folder;
+                    this.baseUrl = `${this.basePath}${folder}`;
                     this.renderDirectory();
                     this.updateBreadcrumb();
                     this.updateStatistics();
@@ -366,14 +367,25 @@
 
                 treeContainer.innerHTML = '';
                 this.manifest.children.forEach(item => {
-                    treeContainer.appendChild(this.createNodeElement(item, this.currentFolder));
+                    treeContainer.appendChild(this.createNodeElement(item));
                 });
 
                 document.getElementById('treeContainer').style.display = 'block';
                 emptyContainer.style.display = 'none';
             }
 
-            createNodeElement(item, basePath) {
+            cleanPath(path, folder) {
+                // Remove leading slash
+                path = path.replace(/^\//, '');
+                // Remove folder prefix if present at start
+                const prefix = folder + '/';
+                if (path.startsWith(prefix)) {
+                    path = path.substring(prefix.length);
+                }
+                return path;
+            }
+
+            createNodeElement(item) {
                 const li = document.createElement('li');
                 const isFolder = item.type === 'folder';
 
@@ -403,7 +415,8 @@
                     name.textContent = item.name;
                 } else {
                     const link = document.createElement('a');
-                    link.href = `${basePath}/${item.path}`;
+                    const cleanedPath = this.cleanPath(item.path, this.currentFolder);
+                    link.href = `${this.baseUrl}/${cleanedPath}`;
                     link.className = 'file-link';
                     link.textContent = item.name;
                     link.download = item.name; // Force download with original filename
@@ -423,7 +436,10 @@
                 // Download button for files
                 const downloadBtn = document.createElement('a');
                 downloadBtn.className = 'download-btn';
-                downloadBtn.href = `${basePath}/${item.path}`;
+                if (item.type === 'file') {
+                    const cleanedPath = this.cleanPath(item.path, this.currentFolder);
+                    downloadBtn.href = `${this.baseUrl}/${cleanedPath}`;
+                }
                 downloadBtn.download = '';
                 downloadBtn.innerHTML = '<i class="fas fa-download"></i>';
 
@@ -443,7 +459,7 @@
                     childrenUl.className = 'tree-node children visible';
 
                     item.children.forEach(child => {
-                        childrenUl.appendChild(this.createNodeElement(child, `${basePath}/${item.name}`));
+                        childrenUl.appendChild(this.createNodeElement(child));
                     });
 
                     li.appendChild(childrenUl);
