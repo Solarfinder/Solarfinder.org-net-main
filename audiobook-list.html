@@ -407,13 +407,15 @@
                 card.className = 'book-card';
 
                 const duration = this.estimateDuration(book.size);
+                // Clean the path - remove leading slash and folder prefix if present
+                const cleanPath = this.cleanPath(book.path);
 
                 card.innerHTML = `
                     <div class="book-title">
-                        <a href="${this.basePath}${this.folderPath}${book.path}" download="${book.name}">
+                        <a href="${this.basePath}${cleanPath}" download="${book.name}">
                             ${this.cleanFileName(book.name)}
                         </a>
-                        <i class="fas fa-download download-icon" onclick="event.stopPropagation(); location.href='${this.basePath}${this.folderPath}${book.path}'"></i>
+                        <i class="fas fa-download download-icon" onclick="event.stopPropagation(); location.href='${this.basePath}${cleanPath}'"></i>
                     </div>
                     <div class="book-meta">
                         <div class="meta-item">
@@ -428,6 +430,17 @@
                 `;
 
                 return card;
+            }
+
+            cleanPath(path) {
+                // Remove leading slash
+                path = path.replace(/^\//, '');
+                // Remove folder prefix if present
+                const prefix = this.folderPath + '/';
+                if (path.startsWith(prefix)) {
+                    path = path.substring(prefix.length);
+                }
+                return path;
             }
 
             cleanFileName(name) {
