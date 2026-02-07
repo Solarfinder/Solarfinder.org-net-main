@@ -530,14 +530,8 @@
             }
 
             cleanPath(path) {
-                // Remove leading slash
-                path = path.replace(/^\//, '');
-                // Remove folder prefix if present
-                const prefix = this.folderPath + '/';
-                if (path.startsWith(prefix)) {
-                    path = path.substring(prefix.length);
-                }
-                return path;
+                // Remove leading slash only - keep the full relative path
+                return path.replace(/^\//, '');
             }
 
             cleanFileName(name) {
